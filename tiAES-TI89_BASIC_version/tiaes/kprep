@@ -1,6 +1,6 @@
 kprep(pp)
 Func
-(c) string (16 to 32 characters)
+(c) string (16 - 32 characters)
 
 Local key
 
