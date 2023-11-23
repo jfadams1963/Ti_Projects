@@ -10,7 +10,7 @@ int main() {
 	
 	uint t=1;
 	for (uint i=2; i<=256; i++) {
-		t=xtimes3(t);
+		t=xtime3(t);
 		printf("%d",t );
 		printf("%c",',');
 	}
