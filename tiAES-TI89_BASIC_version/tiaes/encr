@@ -11,7 +11,7 @@ Local rd,r,c,ns
 0->rd
 st^T->ns
 For r,1,4
-	ns[r] xor w[r+rd*4]->ns[r]
+  ns[r] xor w[r+rd*4]->ns[r]
 EndFor
 ns^T->st
 
@@ -19,7 +19,7 @@ ns^T->st
 For rd,r,nr-1
   (c) SubBytes()
   For r,1,4
-	  For c,1,4
+    For c,1,4
       sbox[st[r,c]+1]->st[r,c]
     EndFor
   EndFor
