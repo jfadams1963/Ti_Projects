@@ -1,5 +1,5 @@
 //Fips 197 xTimes
-//xtimes.c
+//xtime.c
 
 #include <stdio.h>
 #include "gfmath.h"
