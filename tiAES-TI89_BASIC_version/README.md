@@ -1,4 +1,4 @@
-# tiaes
+# tiAES
 tiAES: AES for the TI-89
 
 ABOUT
