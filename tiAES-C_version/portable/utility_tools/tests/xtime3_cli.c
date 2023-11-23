@@ -19,7 +19,7 @@ int main() {
     b=xtimes(a);
     b^=a; 
 */
-	a=xtimes3(a);
+	a=xtime3(a);
     printf("%d\n",a);
 
 	return 0;
