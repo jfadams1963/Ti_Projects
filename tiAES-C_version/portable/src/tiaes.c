@@ -15,43 +15,41 @@ Usage: tiaes [e,d] <infile> <outfile>
 
 
 int main(int argc, char *argv[]) {
-	int i,n;
-	uchar chr;
+    int i,n;
+    uchar chr;
 
-	//arg checks
-	if (argc != 4) {
-		printf("Usage: tiaes [e,d] <infile> <outfile>\n");
-		exit(1);
-	}
+    //arg checks
+    if (argc != 4) {
+        printf("Usage: tiaes [e,d] <infile> <outfile>\n");
+        exit(1);
+    }
 
-	//get passphrase  Need to enforce 32 char limit that works
-	printf("Enter Passphrase (32 characters): \n");
-	do{  
-		chr = getchar();  
-		if (chr != '\n' || chr != '\r'){  
-			key[n++] = chr;  
-		}  
-	} while(chr != '\n' && chr !='\r' && n < 32); 
+    //get passphrase  Need to enforce 32 char limit that works
+    printf("Enter Passphrase (32 characters): \n");
+    do{  
+        chr = getchar();  
+        if (chr != '\n' || chr != '\r'){  
+            key[n++] = chr;  
+        }  
+    } while(chr != '\n' && chr !='\r' && n < 32); 
 
-	ke();
+    ke();
 
-	//open the file handles
-	in = fopen(argv[2],"rb");
-	out = fopen(argv[3],"wb");
+    //open the file handles
+    in = fopen(argv[2],"rb");
+    out = fopen(argv[3],"wb");
 
-	if (*argv[1] == 'e') {
-        //printf("calling cbcenc()\n");
-		cbcenc();
-	} else if (*argv[1] == 'd') {
-        //printf("calling cbcdec()\n");
-		cbcdec();
-	} else {
-		printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
-	}
+    if (*argv[1] == 'e') {
+        cbcenc();
+    } else if (*argv[1] == 'd') {;
+        cbcdec();
+    } else {
+        printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
+    }
 
-	fclose(in);
-	fclose(out);
+    fclose(in);
+    fclose(out);
 
-	return 0;
+    return 0;
 }
     
