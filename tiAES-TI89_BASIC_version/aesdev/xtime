@@ -1,4 +1,4 @@
-xtimes(a)
+xtime(a)
 Func
 (c)int
 
