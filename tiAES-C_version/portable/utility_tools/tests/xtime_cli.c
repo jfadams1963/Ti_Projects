@@ -21,7 +21,7 @@ int main() {
     a %= 256;
     if (b == 1) a^=27;
 */
-	a=xtimes(a);
+	a=xtime(a);
     printf("%u\n",a);
 	return 0;
 
