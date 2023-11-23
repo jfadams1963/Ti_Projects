@@ -9,7 +9,7 @@ uchar alogtbl[]={1,3,5,15,17,51,85,255,26,46,114,150,161,248,19,53,95,225,56,72,
 
 
 //multiply by 2
-uchar xtimes(uchar n) {
+uchar xtime(uchar n) {
     uchar b;
 
     if ((n & 128) > 0) b=1;
@@ -20,7 +20,7 @@ uchar xtimes(uchar n) {
 }
  
 //mulitipy by 3
-uchar xtimes3(uchar n) {
+uchar xtime3(uchar n) {
     uchar b;
 
     if (n == 0) return 0;
