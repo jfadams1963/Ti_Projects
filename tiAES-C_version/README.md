@@ -1,4 +1,4 @@
-# tiaes
+# tiAES
 AES for the TI-89  
 
 This code is experimemntal and is not yet ready to be compiled with TIGCC.
