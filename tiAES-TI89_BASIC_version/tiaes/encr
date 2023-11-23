@@ -4,7 +4,6 @@ Prgm
 (c) Subroutine sections are labled with the FIPS 197
 (c) nomenclature.
 
-
 Local rd,r,c,ns
 
 (c) round 0, whitening
