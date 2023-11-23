@@ -1,0 +1,12 @@
+xtimes3(a)
+Func
+(c)int
+
+If a=0
+  Return 0
+
+Local b
+xtimes(a)->b
+Return b xor a
+
+EndFunc

@@ -1,0 +1,23 @@
+mk_mtabs()
+Prgm
+(c) Builds the GF(256) mulitplication tables.
+
+Local i
+
+newList(256)->m2
+m2->m3
+m2->m9
+m2->m11
+m2->m13
+m2->m14
+
+For i,1,255
+	xtimes(i)->m2[i+1]
+	xtimes3(i)->m3[i+1]
+	xmult(i,9)->m9[i+1]
+	xmult(i,11)->m11[i+1]
+	xmult(i,13)->m13[i+1]
+	xmult(i,14)->m14[i+1]
+EndFor
+
+EndPrgm
