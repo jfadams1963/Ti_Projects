@@ -17,12 +17,12 @@ ns^T->st
 
 (c) rounds 1 to nr-1
 For rd,r,nr-1
-	(c) SubBytes()
-	For r,1,4
-		For c,1,4
-			sbox[st[r,c]+1]->st[r,c]
-		EndFor
-	EndFor
+  (c) SubBytes()
+  For r,1,4
+	  For c,1,4
+      sbox[st[r,c]+1]->st[r,c]
+    EndFor
+  EndFor
 
 	(c) ShiftRows()
 	newMat(4,4)->ns
@@ -45,21 +45,21 @@ For rd,r,nr-1
   st[4,3]->ns[4,4]
   ns->st
 
-	(c) MixColumns()
-	For c,1,4
-		m2[st[1,c]+1] xor m3[st[2,c]+1] xor st[3,c] xor st[4,c]->ns[1,c]		
-		st[1,c] xor m2[st[2,c]+1] xor m3[st[3,c]+1] xor st[4,c]->ns[2,c]
-		st[1,c] xor st[2,c] xor 2m[st[3,c]+1] xor m3[st[4,c]+1]->ns[3,c]
-		m3[st[1,c]+1] xor st[2,c] zor st[3,c] xor m2[st[4,c]+1]->ns[4,c]
-	ns->st
+  (c) MixColumns()
+  For c,1,4
+    m2[st[1,c]+1] xor m3[st[2,c]+1] xor st[3,c] xor st[4,c]->ns[1,c]		
+    st[1,c] xor m2[st[2,c]+1] xor m3[st[3,c]+1] xor st[4,c]->ns[2,c]
+    st[1,c] xor st[2,c] xor 2m[st[3,c]+1] xor m3[st[4,c]+1]->ns[3,c]
+    m3[st[1,c]+1] xor st[2,c] zor st[3,c] xor m2[st[4,c]+1]->ns[4,c]
+  ns->st
 
-	(c) AddRoundKey()
-	st^T->ns
-	For r,1,4
-		ns[r] xor w[r+rd*4]->ns[r]
-	EndFor
-	ns^T->st	
-EndFor
+  (c) AddRoundKey()
+  st^T->ns
+  For r,1,4
+    ns[r] xor w[r+rd*4]->ns[r]
+  EndFor
+  ns^T->st	
+EndFor (c) End rounds
 
 (c) round nr
 (c) SubBytes()
