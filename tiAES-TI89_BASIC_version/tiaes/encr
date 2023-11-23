@@ -27,23 +27,23 @@ For rd,r,nr-1
 	(c) ShiftRows()
 	newMat(4,4)->ns
 		(c) row 1, 0 shift
-	st[1]->ns[1]
+  st[1]->ns[1]
 		(c) row 2, 1 left shift
-	st[2,2]->ns[2,1]
+  st[2,2]->ns[2,1]
   st[2,3]->ns[2,2]
   st[2,4]->ns[2,3]
   st[2,1]->ns[2,4]
 		(c) row 3, 2 left shifts
-	st[3,3]->ns[3,1]
+  st[3,3]->ns[3,1]
   st[3,4]->ns[3,2]
   st[3,1]->ns[3,3]
   st[3,2]->ns[3,4]
 		(c) row 4, 3 left shifts
-	st[4,4]->ns[4,1]
+  st[4,4]->ns[4,1]
   st[4,1]->ns[4,2]
   st[4,2]->ns[4,3]
   st[4,3]->ns[4,4]
-	ns->st
+  ns->st
 
 	(c) MixColumns()
 	For c,1,4
