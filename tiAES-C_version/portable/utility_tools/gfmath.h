@@ -7,8 +7,8 @@ typedef unsigned int uint;
 typedef unsigned char uchar;
 
 //prototypes
-extern uchar xtimes(uchar n);
-extern uchar xtimes3(uchar n);
+extern uchar xtime(uchar n);
+extern uchar xtime3(uchar n);
 extern uchar xmult_nt(uchar a, uchar b);
 extern uchar xmult(uchar a, uchar b);
 extern uchar sbox(uchar n);
