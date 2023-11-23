@@ -17,12 +17,12 @@ int main() {
 
 	//load x2 table
 	for (i=0; i<256; i++) {
-		m2[i]=xtimes(i);
+		m2[i]=xtime(i);
 	}
 
 	//load x3 table
 	for (i=0; i<256; i++) {
-		m3[i]=xtimes3(i);
+		m3[i]=xtime3(i);
 	}
 
 	//load x9 table
