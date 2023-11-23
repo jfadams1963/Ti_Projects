@@ -47,7 +47,7 @@ int main() {
         if ((a & 1) > 0) {
             t=b;
             for (e=0; e<=i; e++) {
-                t=xtimes(t);
+                t=xtime(t);
             }
             d^=t;
         }
