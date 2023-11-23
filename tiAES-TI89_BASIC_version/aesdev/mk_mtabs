@@ -12,8 +12,8 @@ m2->m13
 m2->m14
 
 For i,1,255
-	xtimes(i)->m2[i+1]
-	xtimes3(i)->m3[i+1]
+	xtime(i)->m2[i+1]
+	xtime3(i)->m3[i+1]
 	xmult(i,9)->m9[i+1]
 	xmult(i,11)->m11[i+1]
 	xmult(i,13)->m13[i+1]
