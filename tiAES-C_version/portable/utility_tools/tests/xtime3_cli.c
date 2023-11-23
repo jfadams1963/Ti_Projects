@@ -1,5 +1,5 @@
 //Fips 197 xTimes3
-//xtimes3_cli.c
+//xtime3_cli.c
 
 #include <stdio.h>
 #include "gfmath.h"
