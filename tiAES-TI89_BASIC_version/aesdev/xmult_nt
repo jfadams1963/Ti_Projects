@@ -20,7 +20,7 @@ For i,1,7
 	If (a and 1) > 0 Then
 		b->t
 		For e,1,i
-			xtimes(t)->t
+			xtime(t)->t
 		EndFor
 		d xor t->d
 	EndIf
