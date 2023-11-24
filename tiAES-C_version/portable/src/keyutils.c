@@ -68,7 +68,6 @@ void ke() {
         }
     }
 
-
     //expand key material
     for (i=nk; i<64; i++) {
         gettmp(i-1);
@@ -90,6 +89,5 @@ void ke() {
 		}
         putrow(i);
     }
-
 }// end of ke()
 
