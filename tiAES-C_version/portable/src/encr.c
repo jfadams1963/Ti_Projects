@@ -1,17 +1,14 @@
 //encr.c
 //(c) 2023 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
+//Subroutines are labeled with the FIPS 197 nomenclature.
 
 #include "core.h"
 
-/*
-AES Cipher()
-Subroutines are labeled with the FIPS 197
-nomenclature.
-*/
+/* AES Cipher() */
 void encr() {
     int c,r,rd = 0;
-    /* AddRoundKey()  (column of state) xor (row of RoundKey)*/
+    /* AddRoundKey()  (column of state) xor (row of RoundKey) */
     //round number 0
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
@@ -28,7 +25,7 @@ void encr() {
             }
         }
         
-        /*ShiftRows()*/
+        /* ShiftRows() */
         //row 1, no rotation
         ns[0][0] = st[0][0];
         ns[0][1] = st[0][1];
@@ -51,7 +48,7 @@ void encr() {
         ns[3][3] = st[3][2];
         cpyns_st();
   
-        /* MixColumns()*/
+        /* MixColumns() */
         for (c=0; c<4; c++) {
             ns[0][c] = m2[st[0][c]] ^ m3[st[1][c]] ^ st[2][c] ^ st[3][c];
             ns[1][c] = st[0][c] ^ m2[st[1][c]] ^ m3[st[2][c]] ^ st[3][c];
@@ -59,7 +56,6 @@ void encr() {
             ns[3][c] = m3[st[0][c]] ^ st[1][c] ^ st[2][c] ^ m2[st[3][c]];
         }
         cpyns_st();
-
 
         /* AddRoundKey() */
         //round rd
@@ -70,14 +66,14 @@ void encr() {
         }
     }//end rounds nr-1 to 1
 
-    /*SubBytes()*/
+    /* SubBytes() */
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
             st[r][c] = sbox[st[r][c]];
         }
     }
 
-    /*ShiftRows()*/
+    /* ShiftRows() */
     //row 1, no rotation
     ns[0][0] = st[0][0];
     ns[0][1] = st[0][1];
@@ -100,7 +96,7 @@ void encr() {
     ns[3][3] = st[3][2];
     cpyns_st();
 
-    /* AddRoundKey()*/
+    /* AddRoundKey() */
     //round nr
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
@@ -109,7 +105,8 @@ void encr() {
     }
 }//end decr()
 
-/* Implement CBC mode*/
+
+/* Implement CBC mode */
 void cbcenc() {
     int r,c,s,sz,pd;
     uchar ch;
@@ -125,7 +122,9 @@ void cbcenc() {
         s++;
     }
 
-    /*get padding size*/
+    /*get padding size, add to sz
+      This will go away in favor of
+      PKCS padding scheme*/
     if ((pd=sz%16) > 0) sz += pd;
     
     //call encr() in CBC mode
@@ -153,7 +152,6 @@ void cbcenc() {
                 ch = st[r][c];
                 fputc(ch, out);
             }
-        
 		}
 	}
 }//end cbcenc()
