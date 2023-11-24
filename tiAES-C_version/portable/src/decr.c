@@ -1,18 +1,15 @@
 //derc.c
 //(c) 2023 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
+//Subroutines are labeled with the FIPS 197 nomenclature.
 
 #include "core.h"
 
-/*
-AES InvCipher()
-Subroutines are labeled with the FIPS 197
-nomenclature.
-*/
+/* AES InvCipher() */
 void decr() {
     int r,c,rd = nr;
     //round number nr, i.e., the last round
-    /* AddRoundKey() (colomn of state) xor (row of RoundKey)*/
+    /* AddRoundKey() (colomn of state) xor (row of RoundKey) */
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
             st[c][r] ^= w[rd*4+r][c];
@@ -21,8 +18,7 @@ void decr() {
 
     //rounds nr-1 down to 1
     for (rd=nr-1; rd>0; rd--) {
-
-        /*InvShiftRows()*/
+        /* InvShiftRows() */
         //row 1, no rotation
         ns[0][0] = st[0][0];
         ns[0][1] = st[0][1];
@@ -45,7 +41,7 @@ void decr() {
         ns[3][3] = st[3][0];
         cpyns_st();
 
-        /*InvSubBytes()*/
+        /* InvSubBytes() */
         for (r=0; r<4; r++) {
             for (c=0; c<4; c++) {
                 st[r][c] = sboxi[st[r][c]];
@@ -59,7 +55,7 @@ void decr() {
             }
         }
 
-        /* InvMixColumns()*/
+        /* InvMixColumns() */
         for (c=0; c<4; c++) {
             ns[0][c] = m14[st[0][c]] ^ m11[st[1][c]] ^ m13[st[2][c]] ^ m9[st[3][c]];
             ns[1][c] = m9[st[0][c]] ^ m14[st[1][c]] ^ m11[st[2][c]] ^ m13[st[3][c]];
@@ -69,7 +65,7 @@ void decr() {
         cpyns_st();
     }//end rounds nr-1 to 1
 
-    /*InvShiftRows()*/
+    /* InvShiftRows() */
     //row 1, no rotation
     ns[0][0] = st[0][0];
     ns[0][1] = st[0][1];
@@ -99,7 +95,7 @@ void decr() {
         }
     }
 
-    /* AddRoundKey()*/
+    /* AddRoundKey() */
     //round 0
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
@@ -109,7 +105,7 @@ void decr() {
 }//end decr()
 
 
-/* Implement CBC mode*/
+/* Implement CBC mode */
 void cbcdec() {
     int r,c,s,sz;
 	uchar ch;
