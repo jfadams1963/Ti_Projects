@@ -1,4 +1,4 @@
-xexp(b,e)
+xpow(b,e)
 Func
 (c) int,int (base,exponent)
 (c) Performs b^e in GF(256)
