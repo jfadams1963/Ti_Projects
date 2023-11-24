@@ -1,2 +1,2 @@
 # Ti_Projects
-Ti Calculator Programs
+Ti Calculator Programs in TI89-BASIC and C.
