@@ -16,23 +16,13 @@ setGraph("labels","off")
 getMode("split screen")->smod
 
 If smod="LEFT-RIGHT"  Then
-  If dim(point)=2 Then
-    point[1]->yp
-    point[2]->xp
-  Else
-    36->yp
-    38->xp
-  EndIf
+  36->yp
+  38->xp
   72->yh
   76->xh
 ElseIf smod="FULL" Then
-  If dim(point)=2 Then
-    point[1]->yp
-    point[2]->xp
-  Else
-    38->yp
-    79->xp
-  EndIf
+  38->yp
+  79->xp
   76->yh
   158->xh
 Else
