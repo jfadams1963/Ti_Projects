@@ -15,23 +15,26 @@ setGraph("axes","off")
 setGraph("labels","off")
 getMode("split screen")->smod
 
-If dim(point)=2 Then
-  point[1]->yp
-  point[2]->xp
-Else
-  Disp "Argument is {x,y}"
-  Stop
-
 If smod="LEFT-RIGHT"  Then
-  36->yp
-  38->xp
+  If dim(point)=2 Then
+    point[1]->yp
+    point[2]->xp
+  Else
+    36->yp
+    38->xp
+  EndIf
   72->yh
   76->xh
 ElseIf smod="FULL" Then
-  point[1]->yp
-  point[2]->xp
+  If dim(point)=2 Then
+    point[1]->yp
+    point[2]->xp
+  Else
+    38->yp
+    79->xp
+  EndIf
   76->yh
-  158->158
+  158->xh
 Else
   Disp "Valid screen modes are:"
   Disp "FULL or LEFT-RIGHT"
