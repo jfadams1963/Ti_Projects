@@ -1,0 +1,75 @@
+ant(point)
+Prgm
+(c) list
+(c) {x,y}, where x and y
+(c) are the starting
+(c) coodinates.
+
+(c) Langton's Ant
+(c) Cellular Automaton
+
+Local i,yp,xp,yh,xh,dir,smod
+
+setGraph("grid","off")
+setGraph("axes","off")
+setGraph("labels","off")
+getMode("split screen")->smod
+
+If dim(point)=2 Then
+  point[1]->yp
+  point[2]->xp
+Else
+  Disp "Argument is {x,y}"
+  Stop
+
+If smod="LEFT-RIGHT"  Then
+  36->yp
+  38->xp
+  72->yh
+  76->xh
+ElseIf smod="FULL" Then
+  point[1]->yp
+  point[2]->xp
+  76->yh
+  158->158
+Else
+  Disp "Valid screen modes are:"
+  Disp "FULL or LEFT-RIGHT"
+EndIf
+
+0->dir
+PxlOn yp,xp
+yp-1->yp
+
+While true
+  (c) If on,
+  (c) turn anti-clockwise
+  (c) then set off
+  If pxlTest(yp,xp) Then
+    PxlOff yp,xp
+    mod(dir-1,4)->dir
+  Else
+  (c) Turn clockwise
+  (c) set on
+    PxlOn yp,xp
+    mod(dir+1,4)->dir
+  EndIf
+
+  (c) Move one cell
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
