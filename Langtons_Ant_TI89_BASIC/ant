@@ -56,20 +56,29 @@ While true
   EndIf
 
   (c) Move one cell
+  If dir=0 Then
+    yp-1->yp
+  ElseIf dir=1 Then
+    xp+1->xp
+  ElseIf dir=2 Then
+    yp+1->yp
+  Else
+    xp-1->xp
+  EndIf
 
+  (c) Allow screen
+  (c) wrapping
+  If xp>xh Then
+    0->xp
+  ElseIf xp<0 Then
+    xh->xp
+  EndIf
 
+  If yp>yh Then
+    0->yp
+  ElseIf yp<0 Then
+    yh->yp
+  EndIf
+EndWhile
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+EndPrgm
