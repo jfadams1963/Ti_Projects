@@ -1,9 +1,7 @@
 Langton's Ant is a cellular automaton discovered by Chris Langton in 1986  
 while studying "Artificial Life" and self-organizing systems.  
 &nbsp;  
-&nbsp;  
 Read more:  
-&nbsp;  
 &nbsp;  
 Langton's Ant  
 https://en.wikipedia.org/wiki/Langton's_ant  
