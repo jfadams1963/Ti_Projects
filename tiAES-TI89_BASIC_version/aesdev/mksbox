@@ -8,7 +8,7 @@ Local i,sb,sz
 newList(sz)->sb
 
 For i,0,sz-1
-	sbox197(i)->sb[i+1]
+  sbox197(i)->sb[i+1]
 EndFor
 
 Return sb
