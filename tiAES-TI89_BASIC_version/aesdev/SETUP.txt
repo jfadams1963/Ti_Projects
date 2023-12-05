@@ -1,1 +1,2 @@
-Building the Utility Functions and Look-up Tables
+The aesdev directory holds the tools needed to build the look-up tables for GF(256)
+multiplication, the sbox, and inverse sbox.
