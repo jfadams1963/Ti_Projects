@@ -1,6 +1,6 @@
 dataenc(file)
 Prgm
-(c) [string, list, mat]
+(c)[string, list, mat]
 
 Local ft,i,j,sz,rsz,csz,cel,t,ky,ky2,w,r,dir,eout
 
