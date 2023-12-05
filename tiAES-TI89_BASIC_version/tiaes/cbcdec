@@ -9,8 +9,8 @@ dim(cs)->sl
 (c) empty plaintext string
 ""->ps
 
-(c) get CBC intitial value 'mix block'
-subMat(w,rowDim(w)-3,1)->mb
+(c) get CBC initialization vector
+subMat(w,rowDim(w)-3,1)->iv
 
 For i,1,sl,32
 	(c) encrypted bytes are represented by 2 hex digits
@@ -20,10 +20,10 @@ For i,1,sl,32
 	(c) copy state to a temp block
 	st->tb
 	decr(w)
-	st xor mb->st
+	st xor iv->st
 	ps&ord_char(st)->ps
-	(c) temp block becomes the next mix block
-	tb->mb
+	(c) temp block becomes the next IV
+	tb->iv
 EndFor
 
 ps->out
