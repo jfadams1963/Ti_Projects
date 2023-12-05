@@ -1,6 +1,6 @@
 cbcdec(cs,w)
 Prgm
-(c) string,mat
+(c) string, mat
 (c) takes a cypher string and the key schedule
 
 Local ps,i,sl,mb,tb
