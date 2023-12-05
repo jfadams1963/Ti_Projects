@@ -1,4 +1,4 @@
-# tiAES
+# tiAES-BASIC
 tiAES: AES for the TI-89/90+ written in TI-89 BASIC  
 
 ABOUT  
