@@ -9,7 +9,7 @@ Local i,si,sz
 newList(sz)->si
 
 For i,0,sz-1
-	i->si[sb[i+1]+1]
+  i->si[sb[i+1]+1]
 EndFor
 
 Return si
