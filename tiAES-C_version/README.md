@@ -13,7 +13,7 @@ STATUS
 
 The KeyExpanson and Cypher routines produce FIPS-197 compliant output as verified with a block-by-block comparison to the "APPENDIX A - KEY EXPANSION EXAMPLES" and "APPENDIX B – CIPHER EXAMPLE" in the FIPS 197 documentation: https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf  (See tiAES-C_version/portable/src/keyutils.c and tiAES-C_version/portable/src/encr.c)  
 
-Currently the InvCypher routine (tiAES-C_version/portable/src/decr.c) does not correctly decrypt. It compiles and runs without error, but the resulting binary does not match the original cleartext.  
+Currently the InvCypher routine (tiAES-C_version/portable/src/decr.c) does not correctly decrypt. It compiles and runs without error, but the resulting binary does not match the original cleartext. Obviously some work is needed there.  
 
 There is not yet a padding scheme in place. (See Issues)  
 
