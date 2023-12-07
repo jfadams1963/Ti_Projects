@@ -9,3 +9,4 @@ Note the following replacements in these text files:
 + the comment (copyright) symbol, &copy;, is replaced by '(c)',
 + the right arrow, &rarr;, used for variable assignment is replaced by '->',
 + the matrix transpose superscript is replaced by '^T'.
+
