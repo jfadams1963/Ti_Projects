@@ -1,5 +1,5 @@
 # Ti_Projects
-Ti Calculator Programs in TI89-BASIC and C. (TI-89/Titanium, TI-92/+, Voyage 200)  
+Ti Calculator Programs in TI89-BASIC and C. (TI-89/Titanium, TI-92+, Voyage 200)  
 &nbsp;
 
 More TI BASIC programs will be added as time allows.  
