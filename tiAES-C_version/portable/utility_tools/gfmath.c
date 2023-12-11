@@ -24,7 +24,7 @@ uchar xtime3(uchar n) {
     uchar b;
 
     if (n == 0) return 0;
-    b=xtimes(n);
+    b=xtime(n);
 	b ^= n;
     return b;
 }
@@ -59,7 +59,7 @@ uchar xmult_nt(uchar a, uchar b) {
         if ((a & 1) > 0) {
             t = b;
             for (int e=0; e<=i; e++) {
-                t=xtimes(t);
+                t=xtime(t);
             }
             d ^= t;
         }

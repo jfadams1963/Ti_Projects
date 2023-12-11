@@ -1,23 +1,10 @@
-//xmult.c
-//Fips 197 xMult
+//xmult_cli.c
+//Fips 197 xmult
 #include <stdio.h>
+#include "gfmath.h"
 
 typedef unsigned int uint;
 
-uint xtimes(uint n) {
-    uint m;
-	m=0;
-	
-	if (n == 0) {
-        return n;
-	}
-
-	if ((n & 128) > 0) m=1;
-	n = (n << 1);
-	n %= 256;
-	if (m == 1) n^=27;
-	return n;
-}
 
 int main() {
     uint a,b,d,e,i,t;
@@ -45,11 +32,11 @@ int main() {
     t=0;
     for (i=0; i<7; i++) {
         if ((a & 1) > 0) {
-            t=b;
+            t = b;
             for (e=0; e<=i; e++) {
-                t=xtime(t);
+                t = xtime(t);
             }
-            d^=t;
+            d ^= t;
         }
         a = (a >> 1);
     }
