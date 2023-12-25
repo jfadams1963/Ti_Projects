@@ -1,6 +1,6 @@
 # Ti_Projects
 Ti Calculator programs in TI-89 BASIC and C for the m68k based calculators: TI-89/Titanium, TI-92+, Voyage 200. And programs in Python for the TI nSpire CX II calculators.
-&nbsp;
+&nbsp;  
 More TI-89 BASIC programs will be added as time allows.  
 &nbsp;  
 
