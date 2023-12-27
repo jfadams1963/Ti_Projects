@@ -21,7 +21,7 @@ Notes on reading and writing blocks
 
 We use numpy.fromfile() to read bytes into a byte array: We will read blocks of 16 in
 to a vector, then use reshape(4,4,order='F') to create a new state block, which then is
-encr|decr, flattened, then written to outfile.  
+encr|decr, flattened, then written to outfile. Order 'F' loads the bytes into a block by column.
 
 We track the offset i with outfile.tell() to load 16 bytes from the byte array  
  for each block:  
