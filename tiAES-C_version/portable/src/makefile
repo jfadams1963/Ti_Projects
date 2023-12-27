@@ -1,4 +1,4 @@
-CC      = gcc
+CC      = cc
 CFLAGS  = -g -w -Wall -Wextra -Wl,--allow-multiple-definition 
 RM      = rm -f
 
