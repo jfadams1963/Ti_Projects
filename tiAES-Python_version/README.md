@@ -26,8 +26,8 @@ encr|decr, flattened, then written to outfile. Order 'F' loads the bytes into a 
 We track the offset i with outfile.tell() to load 16 bytes from the byte array  
  for each block:  
  
-      sv = bpd[i:i+16]
-      st = sv.reshape(4, 4, order='F')  
+     sv = bpd[i:i+16]
+     st = sv.reshape(4, 4, order='F')  
 (where bpd is the padded byte array from the input file).  
 ``` 
                                                                           [01 05 09 13]  
