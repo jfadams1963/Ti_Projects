@@ -42,7 +42,8 @@ To write out state blocks, we call sv = st.flatten(order='F') on each block, the
 [04 08 12 16]
 ```
 
-Notes block padding  
+Notes on block padding  
+
     padding_bytes = block_size - (message_length % block_size)  
     where block_size = 16  
 Padding bytes are appended to the file's byte array _before_ encryption. The value of the added bytes = padding_bytes.  
