@@ -46,6 +46,7 @@ Notes on block padding
 
     padding_bytes = block_size - (message_length % block_size)  
     where block_size = 16  
+    
 Padding bytes are appended to the file's byte array _before_ encryption. The value of the added bytes = padding_bytes.  
 After decryption, the last byte is read and assigned to padding_bytes, which is the number of bytes to be truncated.  
 https://www.ibm.com/docs/en/zos/3.1.0?topic=rules-pkcs-padding-method  
