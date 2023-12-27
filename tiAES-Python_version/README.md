@@ -58,9 +58,9 @@ Notes on using the ulab library in place of numpy in MicroPython
 Use of ulab in place of numpy in MicroPython supplies a good amount of numpy functionality however, two important methods are currently missing: fromfile() and append(), both of which are used here. This matters to the author in as much as it was hoped that this code could run on the TI nSpire cx calculators using ulab.  
 
 If/when the ulab library supports these methods, it should be a 'drop in' replacement for numpy using:  
-
-    from ulab import numpy as np  
-
+```python
+from ulab import numpy as np  
+```
 In the mean time, the existing code can be reworked to get around the use of fromfile() and append().    
 
 TUTORIAL  
