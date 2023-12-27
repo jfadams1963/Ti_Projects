@@ -15,6 +15,8 @@ The KeyExpanson and Cypher routines produce FIPS-197 compliant output as verifie
 
 Currently the InvCypher routine (tiAES-C_version/portable/src/decr.c) does not correctly decrypt. It compiles and runs without error, but the resulting binary does not match the original cleartext. Obviously some work is needed there.  
 
+The portable version compiles cleanly with Clang 16.0.6 on FreeBSD, GCC 7.5.0 on NetBSD, and GCC 11.4.0 on Linux.
+
 There is not yet a padding scheme in place. (See Issues)  
 
 
