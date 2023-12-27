@@ -26,18 +26,21 @@ encr|decr, flattened, then written to outfile.
 We track the offset i with outfile.tell() to load 16 bytes from the byte array  
  for each block:  
       sv = bpd[i:i+16], (where bpd is the padded byte array from the input file)  
-      st = sv.reshape(4, 4, order='F')  
+      st = sv.reshape(4, 4, order='F') 
+``` 
                                                                           [01 05 09 13]  
 bpd[i:i+16]->[01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16].reshape()->[02 06 10 14]  
                                                                           [03 07 11 15]  
-                                                                          [04 08 12 16]  
+                                                                          [04 08 12 16]
+```
 
-To write out state blocks, we call sv = st.flatten(order='F') on each block, then write the bytes from each flattened block sv in to the open outfile, tracking the byte position with outfile.tell().
-      
+To write out state blocks, we call sv = st.flatten(order='F') on each block, then write the bytes from each flattened block sv in to the open outfile, tracking the byte position with outfile.tell().  
+``` 
 [01 05 09 13]  
 [02 06 10 14].flatten()->[01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16]-> of.write()  
 [03 07 11 15]   
-[04 08 12 16]  
+[04 08 12 16]
+```
 
 Notes block padding  
     padding_bytes = block_size - (message_length % block_size)  
