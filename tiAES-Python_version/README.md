@@ -12,7 +12,7 @@ STATUS
 This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is a 16-, 24- or, 32-character passphrase. The length of the key phrase will determine 128, 192, or 256 bit encrypton.  
 
 This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
-Standard:  
+Standard, even using the exact function names from the standard:  
 https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf  
 
 While it works, we cannot make any claims as to how secure the coding is nor is it very fast on large files. Do not use this code for anything other that personal education and enjoyment.  
