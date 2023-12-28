@@ -11,26 +11,26 @@ USAGE
 
 Other than the standard Python libraries, you will need NumPy installed.  
 
-    pip3 install numpy  
+    $ pip3 install numpy  
 or  
 
-    pip3 install -r requrirements.txt  
+    $ pip3 install -r requrirements.txt  
 
 Run:  
 
-    ./tiAES.py [-h, --help]
+    $ ./tiAES.py [-h, --help]
 
 for options.  
 
 To encrypt a file:  
 
-    ./tiAES.py -e <filename>  
+    $ ./tiAES.py -e <filename>  
 
 which will write a file called filename.enc.  
 
 The decrypt will look for the file extension '.enc'. To decrypt:  
 
-    ./tiAES.py -d <filename>.enc  
+    $ ./tiAES.py -d <filename>.enc  
 
 which will write the file filename.dec. Thus, your original file will never be overwritten.  
 
