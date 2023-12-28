@@ -1,4 +1,4 @@
-![alt text](https://github.com/tandpfun/skill-icons/raw/main/icons/Python-Dark.svg){ width=50% }
+<img src="https://github.com/tandpfun/skill-icons/raw/main/icons/Python-Dark.svg "width="150" height="100" />
 # tiAES-Python
 tiAES: AES for the TI nSpire CX II  
 
