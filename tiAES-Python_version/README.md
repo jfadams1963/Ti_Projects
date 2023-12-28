@@ -16,7 +16,7 @@ or
 
     pip3 install -r requrirements.txt  
 
-To run:  
+Run:  
 
     ./tiAES.py [-h, --help]
 
