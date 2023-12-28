@@ -1,4 +1,4 @@
-<img src="https://github.com/jfadams1963/Ti_Projects/Python-Dark.svg" "width="150" height="100">
+![alt text](Python-Dark.svg)
 # tiAES-Python
 tiAES: AES for the TI nSpire CX II  
 
