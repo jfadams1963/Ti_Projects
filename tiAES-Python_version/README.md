@@ -35,7 +35,7 @@ The decrypt will look for the file extension '.enc'. To decrypt:
 
     $ ./tiAES.py -d <filename>.enc  
 
-which will write the file filename.dec. Thus, your original file will never be overwritten.  
+which will write the file filename.dec.  
 
 STATUS  
 
