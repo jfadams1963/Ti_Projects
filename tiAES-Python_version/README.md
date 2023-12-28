@@ -39,7 +39,7 @@ which will write the file filename.dec.
 
 STATUS  
 
-This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is a 16-, 24- or, 32-character passphrase. The length of the key phrase will determine 128, 192, or 256 bit encrypton.  
+This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is an SHA256 hash of the passphrase providing a 32byte/256bit key.  
 
 This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
 Standard, even using the exact function names from the standard:  
