@@ -1,4 +1,4 @@
-![alt text](Python-Dark.svg)
+![alt text](python-icon.png)
 # tiAES-Python
 tiAES: AES for the TI nSpire CX II  
 
