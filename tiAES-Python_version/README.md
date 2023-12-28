@@ -7,6 +7,33 @@ tiAES software was developed as and educational tool for the purposes of demonst
 
 tiAES is free and open source software released under the 2-clause BSD license. The purpose of this licensing is to provide attribution to the author(s), while giving the code to the world as a gift. I hope you enjoy it!  
 
+USAGE  
+
+Other than the standard Python libraries, you will need NumPy installed.  
+
+    pip3 install numpy  
+or  
+
+    pip3 install -r requrirements.txt  
+
+To run:  
+
+    ./tiAES.py [-h, --help]
+
+for options.  
+
+To encrypt a file:  
+
+    ./tiAES.py -e <filename>  
+
+which will write a file called filename.enc.  
+
+The decrypt will look for the file extension '.enc'. To decrypt:  
+
+    ./tiAES.py -d <filename>.enc  
+
+which will write the file filename.dec. Thus, your original file will never be overwritten.  
+
 STATUS  
 
 This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is a 16-, 24- or, 32-character passphrase. The length of the key phrase will determine 128, 192, or 256 bit encrypton.  
