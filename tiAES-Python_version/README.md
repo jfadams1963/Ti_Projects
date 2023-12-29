@@ -22,7 +22,7 @@ or
 
 Run:  
 
-    $ ./tiAES.py [-h, --help]
+    $ ./tiAES.py [-h|--help]
 
 for options.  
 
