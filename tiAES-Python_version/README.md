@@ -10,9 +10,10 @@ tiAES is free and open source software released under the 2-clause BSD license. 
 
 It is meant to be run on any system with python 3.x and the NumPy library installed. It will eventually be able to run on the TI nSpire CX II with the Ulab library providing numpy classes and methods. It's not quite there yet, and anyone interested is encouraged to hack away at it.  
 
+
 USAGE  
 
-Other than the standard Python libraries, you will need NumPy installed.  
+Download the files tiAES.py and pyaes_tables.py and put them in the same directory. Other than the standard Python libraries, you will need NumPy installed:   
 
     $ pip3 install numpy  
 or  
