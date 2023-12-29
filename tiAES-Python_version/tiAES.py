@@ -86,6 +86,8 @@ def AddRoundKey(st: np.ndarray, w: np.ndarray, rnd: int) -> np.ndarray:
     Array st is the state.
     Array w is the key schedule.
     Integer rnd is the round.
+    AddRoundkey() xors columns of state with rows
+    of key material.
     """
 
     for c in range(4):
@@ -100,7 +102,7 @@ def SubBytes(st: np.ndarray) -> np.ndarray:
     """
     Implements the FIPS 197 SubBytes() routine.
     Array st is the state.
-    Substitues values in st from the sbox.
+    Substitues values in state from the sbox.
     """
     for r in range(4):
         for c in range(4):
@@ -114,7 +116,7 @@ def InvSubBytes(st: np.ndarray) -> np.ndarray:
     """
     Implements the FIPS 197 InvSubBytes() routine.
     Array st is the state.
-    Substitues values in st from the inverse sbox.
+    Substitues values in state from the inverse sbox.
     """
     for r in range(4):
         for c in range(4):
@@ -129,7 +131,7 @@ def ShiftRows(st: np.ndarray) -> np.ndarray:
     Implements the FIPS 197 ShiftRows() routine.
     Array st is the state.
     Shift values left (-) in rows 2, 3 and 4 of st
-    by -1, -2 and -3 places.
+    by -1, -2 and -3 places, respectively.
     """
     st[1, :] = np.roll(st[1, :], -1)
     st[2, :] = np.roll(st[2, :], -2)
@@ -144,7 +146,7 @@ def InvShiftRows(st: np.ndarray) -> np.ndarray:
     Implements the FIPS 197 InvShiftRows() routine.
     Array st is the state.
     Shift values right (+) in rows 2, 3 and 4 of st
-    by 1, 2 and 3 places.
+    by 1, 2 and 3 places, respectively.
     """
     st[1, :] = np.roll(st[1, :], 1)
     st[2, :] = np.roll(st[2, :], 2)
@@ -199,6 +201,10 @@ def InvMixColumns(st: np.ndarray) -> np.ndarray:
 def Cipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
     """
     Encrypts one block with AES
+    Calculates number of rounds, nr, by dividing the
+    number of rows in the key schedule, w, by 4.
+    Notice that we subtract 4 from the row count to 
+    account for the extra block used for the CBC IV.
     """
     nr = (np.shape(w)[0]-4)//4 - 1
 
@@ -224,6 +230,7 @@ def Cipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
 def InvCipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
     """
     Decrypts one block with AES
+    See above note on number of rounds.
     """
     nr = (np.shape(w)[0]-4)//4 - 1
 
@@ -405,8 +412,6 @@ def cbcdecr(fname: str, key: np.ndarray):
 
 
 def main():
-    """
-    """
     do_encr = None
     
     # Handle args
@@ -434,10 +439,6 @@ def main():
     else:
         sys.exit()
 
-    # Probably not needed, but catch the unexpected
-    if do_encr is None:
-        sys.exit()
-
     # Make sure pwd is 16 characters min
     plen = 1
     while plen < 16:
@@ -446,6 +447,7 @@ def main():
 
     # The actual key is a hash of the passphrase
     # We're basically enforcing 256bit encryption
+    # since the hash is always 32bytes/256bits
     phsh = hashlib.sha256(str.encode(pstr)).digest()
     pwd = np.zeros(32, dtype=np.uint8)
     for i, b in enumerate(phsh):
