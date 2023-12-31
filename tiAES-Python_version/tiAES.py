@@ -293,12 +293,9 @@ def cbcencr(fname: str, key: np.ndarray):
     # pad the byte array
     pv = np.uint8(pad)
     padding = [pv for x in range(pad)]
-    # This is to be encrypted.
-    # It is a byte array of the input file
-    # plus the padding.
+    # This is a byte array of the input file
+    # plus the padding:
     bpd = np.append(barr, padding)
-    #bpd = np.concatenate((barr, padding),
-    #                     dtype='uint8', casting='unsafe')
 
     try:
         with open(outfile, 'w+b') as of:
