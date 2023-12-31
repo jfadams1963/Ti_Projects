@@ -76,7 +76,9 @@ def KeyExpansion(key: np.ndarray) -> np.ndarray:
             temp = np.array([sbox[val] for val in temp], dtype=np.uint8)
         
         w[i] = w[i-nk] ^ temp
-    
+
+    del key, temp
+    gc.collect()
     return w
 # End KeyExpansion
 
