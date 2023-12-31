@@ -13,6 +13,7 @@ enjoyment.
 """
 
 import os
+import gc
 import sys
 import hashlib
 import argparse
@@ -296,15 +297,17 @@ def cbcencr(fname: str, key: np.ndarray):
     # This is a byte array of the input file
     # plus the padding:
     bpd = np.append(barr, padding)
+    del pv, padding, barr
+    gc.collect()
 
     try:
         with open(outfile, 'w+b') as of:
             ## Do CBC mode encr ##
-            # We need to iterate through bpd 16 bytes
+            # We need to iterate through pbd 16 bytes
             # at a time, load them into a 4x4 state block
             # array (stb) encrypt, flatten (fst) then write
             # to outfile each time.
-            # Note that we do (state xor IV) _before_ we encrypt.
+            # Note that we do state xor IV _before_ we encrypt.
             # The new state becomes the IV for the next CBC round.
 
             i = 0
@@ -331,6 +334,9 @@ def cbcencr(fname: str, key: np.ndarray):
         # End with, automatic of.close()
     except Exception as e:
         traceback.print_exc()
+    finally:
+        del bpd, st, stb, iv, fst
+        gc.collect()
 # End cbcencr
 
 
@@ -366,11 +372,11 @@ def cbcdecr(fname: str, key: np.ndarray):
     try:
         with open(outfile, 'w+b') as of:
             ## Do CBC mode decr ##
-            # We need to iterate through barr 16 bytes
+            # We need to iterate through pbd 16 bytes
             # at a time, load them into a 4x4 state block
             # array (stb) decrypt, flatten (fst) then write
             # to outfile each time.
-            # Note that we do (state xor IV) _after_ we decrypt.
+            # Note that we do stat xor IV _after_ we decrypt.
             # The new state becomes the IV for the next CBC round.
 
             i = 0
@@ -405,6 +411,9 @@ def cbcdecr(fname: str, key: np.ndarray):
         # End with, automatic of.close()
     except Exception as e:
         traceback.print_exc()
+    finally:
+        del fsz, st, stb, tb, iv, fst
+        gc.collect()
 # End cbcdecr
 
 
@@ -449,16 +458,22 @@ def main():
     pwd = np.zeros(32, dtype=np.uint8)
     for i, b in enumerate(phsh):
         pwd[i] = b
+    del phsh, pstr, plen
+    gc.collect()
 
     key = KeyExpansion(pwd)
 
     if do_encr is True:
         print('We will now encrypt', args.filename, 'to '+args.filename+'.enc')
         cbcencr(args.filename, key)
+        del pwd, key
+        gc.collect()
     elif do_encr is False:
         fstrp = fsplit[0]
         print('We will now decrypt', args.filename, 'to '+fstrp+'.dec')
         cbcdecr(args.filename, key)
+        del pwd, key
+        gc.collect()
     else:
         sys.exit()
 
