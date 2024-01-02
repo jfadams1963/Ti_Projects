@@ -127,7 +127,10 @@ void cbcenc() {
       PKCS padding scheme*/
     if ((pd=sz%16) > 0) sz += pd;
     
-    //call encr() in CBC mode
+    // This is sending on block at a time to encr()
+    // We will probably read out the input file to an array
+    // the size of the file plus the padding, then do the
+    // encryption and write to the output file.
     for (int i=1; i<=sz; i+=16) {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
@@ -138,12 +141,13 @@ void cbcenc() {
                 }
             }
         }
-        //st = st ^ iv;
+        //st = st^iv;
 	for (r=0; r<4; r++) {
 	    for (c=0; c<4; c++) {
 		st[r][c] = st[r][c] ^ iv[r][c];
             }
 	}
+        //call encr()
         encr();
         cpyst_iv();
         //write bytes to outfile by column
@@ -152,7 +156,7 @@ void cbcenc() {
                 ch = st[r][c];
                 fputc(ch, out);
             }
-		}
-	}
+        }
+    }
 }//end cbcenc()
 

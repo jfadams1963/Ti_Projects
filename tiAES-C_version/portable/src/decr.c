@@ -122,16 +122,20 @@ void cbcdec() {
         s++;
     }
 
-    //call decr() in CBC mode
+    // This is processing one block at a time
+    // We might want to write the decrypted bytes to
+    // an array, then write out to the output file
+    // and truncate the padding bytes.
     for (int i=1; i<=sz; i+=16) {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 if ((ch=fgetc(in)) != EOF) {
                    st[r][c] =  (uchar) ch;
-				}
+                }
             }
         }
         cpyst_tb();
+        //call decr()
         decr();
         //st^=iv;
         for (r=0; r<4; r++) {
