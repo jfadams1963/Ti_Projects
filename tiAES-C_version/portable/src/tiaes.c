@@ -6,6 +6,7 @@
 Usage: tiaes [e,d] <infile> <outfile>
 */
 
+#include <unistd.h>
 #include "core.h"
 
 #ifndef CRYPUTILS_H
@@ -15,8 +16,7 @@ Usage: tiaes [e,d] <infile> <outfile>
 
 
 int main(int argc, char *argv[]) {
-    int i,n;
-    uchar chr;
+    int i,sz;
 
     //arg checks
     if (argc != 4) {
@@ -24,14 +24,14 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    //get passphrase  Need to enforce 32 char limit that works
-    printf("Enter Passphrase (32 characters): \n");
-    do{  
-        chr = getchar();  
-        if (chr != '\n' || chr != '\r'){  
-            key[n++] = chr;  
-        }  
-    } while(chr != '\n' && chr !='\r' && n < 32); 
+    uchar *pwd = getpass("Password: ");
+
+    sz = sizeof(pwd);
+    i = 0;
+    while ((i < sz) && (i < 32) ) {
+        key[i] = pwd[i];
+	i++;
+    }
 
     ke();
 

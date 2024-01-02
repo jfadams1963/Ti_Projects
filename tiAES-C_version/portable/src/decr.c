@@ -7,17 +7,17 @@
 
 /* AES InvCipher() */
 void decr() {
-    int r,c,rd = nr;
+    int r,c,rd;
     //round number nr, i.e., the last round
     /* AddRoundKey() (colomn of state) xor (row of RoundKey) */
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-            st[c][r] ^= w[rd*4+r][c];
+            st[c][r] ^= w[(nr-1)*4+r][c];
         }
     }
 
     //rounds nr-1 down to 1
-    for (rd=nr-1; rd>0; rd--) {
+    for (rd=nr-2; rd>0; rd--) {
         /* InvShiftRows() */
         //row 1, no rotation
         ns[0][0] = st[0][0];
@@ -97,6 +97,7 @@ void decr() {
 
     /* AddRoundKey() */
     //round 0
+    rd = 0;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
             st[c][r] ^= w[rd*4+r][c];
@@ -133,15 +134,15 @@ void cbcdec() {
         cpyst_tb();
         decr();
         //st^=iv;
-		for (r=0; r<4; r++) {
-			for (c=0; c<4; c++) {
-				st[r][c] = st[r][c] ^ iv[r][c];
-			}
-		}
+        for (r=0; r<4; r++) {
+	    for (c=0; c<4; c++) {
+                st[r][c] = st[r][c] ^ iv[r][c];
+            }
+        }
         cpytb_iv();
         //write bytes to outfile by column
         for (c=0; c<4; c++) {
-	        for (r=0; r<4; r++) {
+            for (r=0; r<4; r++) {
                 ch = st[r][c];
                 fputc(ch, out);
             }

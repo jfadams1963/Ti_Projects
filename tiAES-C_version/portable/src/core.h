@@ -32,7 +32,8 @@ typedef unsigned char word[4];
 block st,ns,iv,tb;
 
 //globals
-unsigned int nk,nr;
+unsigned int nk = 8;
+unsigned int nr = 14;
 unsigned char w[64][4];
 FILE *in,*out;
 unsigned char key[32];

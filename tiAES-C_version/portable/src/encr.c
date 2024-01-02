@@ -12,12 +12,12 @@ void encr() {
     //round number 0
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-            st[c][r] ^= w[rd*r+4][c];
+            st[c][r] ^= w[rd*4+r][c];
         }
     }
 
     //rounds 1 to nr-1
-    for (rd=1; rd<nr; rd++) {
+    for (rd=1; rd<(nr-1); rd++) {
         /*SubBytes()*/
         for (r=0; r<4; r++) {
             for (c=0; c<4; c++) {
@@ -61,7 +61,7 @@ void encr() {
         //round rd
         for (r=0; r<4; r++) {
             for (c=0; c<4; c++) {
-                st[c][r] ^= w[nr*4+r][c];
+                st[c][r] ^= w[rd*4+r][c];
             }
         }
     }//end rounds nr-1 to 1
@@ -100,7 +100,7 @@ void encr() {
     //round nr
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-            st[c][r] ^= w[rd*4+r][c];
+            st[c][r] ^= w[(nr-1)*4+r][c];
         }
     }
 }//end decr()
@@ -110,7 +110,7 @@ void encr() {
 void cbcenc() {
     int r,c,s,sz,pd;
     uchar ch;
-    sz = sizeof (in);
+    sz = sizeof(in);
 
     //Get Initialization Vector block and fill temp block
     s = 60;
@@ -139,11 +139,11 @@ void cbcenc() {
             }
         }
         //st = st ^ iv;
-		for (r=0; r<4; r++) {
-			for (c=0; c<4; c++) {
-				st[r][c] = st[r][c] ^ iv[r][c];
-			}
-		}
+	for (r=0; r<4; r++) {
+	    for (c=0; c<4; c++) {
+		st[r][c] = st[r][c] ^ iv[r][c];
+            }
+	}
         encr();
         cpyst_iv();
         //write bytes to outfile by column
