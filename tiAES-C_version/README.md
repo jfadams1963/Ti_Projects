@@ -13,10 +13,10 @@ STATUS
 
 The KeyExpanson and Cypher routines produce FIPS-197 compliant output as verified with a block-by-block comparison to the "APPENDIX A - KEY EXPANSION EXAMPLES" and "APPENDIX B – CIPHER EXAMPLE" in the FIPS 197 documentation: https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf  (See tiAES-C_version/portable/src/keyutils.c and tiAES-C_version/portable/src/encr.c)  
 
-Currently the InvCypher routine (tiAES-C_version/portable/src/decr.c) does not correctly decrypt. It compiles and runs without error, but the resulting binary does not match the original cleartext. Obviously some work is needed there.  
+The program only encyrpts and decrypts files of 16B in size. Any file larger than that is truncated to 16B. The decrypt correctly reproduces the first 16B of the original file. Some work is needed. There is not yet a padding scheme in place. (See Issues) We will implement the PKCS scheme for padding.  
 
 The portable version compiles cleanly with Clang 16.0.6 on FreeBSD, GCC 7.5.0 on NetBSD, and GCC 11.4.0 on Linux.
 
-There is not yet a padding scheme in place. (See Issues)  
+
 
 
