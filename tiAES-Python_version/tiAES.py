@@ -135,12 +135,33 @@ def ShiftRows(st: np.ndarray) -> np.ndarray:
     Array st is the state.
     Shift values left (-) in rows 2, 3 and 4 of st
     by -1, -2 and -3 places, respectively.
-    """
+    #These calls to numpy.roll() are very expensive.
     st[1, :] = np.roll(st[1, :], -1)
     st[2, :] = np.roll(st[2, :], -2)
     st[3, :] = np.roll(st[3, :], -3)
+    The code below is twice as fast.
+    """
+    nst = np.zeros((4,4), dtype=np.uint8)
 
-    return st
+    # row 1, no rotation
+    nst[0, :] = st[0, :]
+    # row 2, 1 rotation
+    nst[1, 0] = st[1, 1]
+    nst[1, 1] = st[1, 2]
+    nst[1, 2] = st[1, 3]
+    nst[1, 3] = st[1, 0]
+    # row 3, 2 rotations
+    nst[2, 0] = st[2, 2]
+    nst[2, 1] = st[2, 3]
+    nst[2, 2] = st[2, 0]
+    nst[2, 3] = st[2, 1]
+    #row 4, 3 rotations
+    nst[3, 0] = st[3, 3]
+    nst[3, 1] = st[3, 0]
+    nst[3, 2] = st[3, 1]
+    nst[3, 3] = st[3, 2]
+
+    return nst
 # End ShiftRows
 
 
@@ -150,12 +171,33 @@ def InvShiftRows(st: np.ndarray) -> np.ndarray:
     Array st is the state.
     Shift values right (+) in rows 2, 3 and 4 of st
     by 1, 2 and 3 places, respectively.
-    """
+    #These calls to numpy.roll() are very expensive.
     st[1, :] = np.roll(st[1, :], 1)
     st[2, :] = np.roll(st[2, :], 2)
     st[3, :] = np.roll(st[3, :], 3)
-    
-    return st
+    The code below is twice as fast.
+    """
+    nst = np.zeros((4,4), dtype=np.uint8)
+
+    #row 1, no rotation
+    nst[0, :] = st[0, :]
+    #row 2, -1 rotation
+    nst[1, 0] = st[1, 3]
+    nst[1, 1] = st[1, 0]
+    nst[1, 2] = st[1, 1]
+    nst[1, 3] = st[1, 2]
+    #row 3, -2 rotation
+    nst[2, 0] = st[2, 2]
+    nst[2, 1] = st[2, 3]
+    nst[2, 2] = st[2, 0]
+    nst[2, 3] = st[2, 1]
+    #row 4, -3 rotation
+    nst[3, 0] = st[3, 1]
+    nst[3, 1] = st[3, 2]
+    nst[3, 2] = st[3, 3]
+    nst[3, 3] = st[3, 0]
+
+    return nst
 # End InvShiftRows
 
 
