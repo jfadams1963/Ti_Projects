@@ -142,11 +142,11 @@ void cbcenc() {
             }
         }
         //st = st^iv;
-		for (r=0; r<4; r++) {
-			for (c=0; c<4; c++) {
-				st[r][c] = st[r][c] ^ iv[r][c];
+        for (r=0; r<4; r++) {
+            for (c=0; c<4; c++) {
+                st[r][c] = st[r][c] ^ iv[r][c];
             }
-		}
+        }
         //call encr()
         encr();
         cpyst_iv();
