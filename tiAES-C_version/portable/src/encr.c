@@ -125,7 +125,7 @@ void cbcenc() {
     /*get padding size, add to sz
       This will go away in favor of
       PKCS padding scheme*/
-    if ((pd=sz%16) > 0) sz += pd;
+    if ((sz%16) > 0) sz += (16-(sz%16));
     
     // This is sending on block at a time to encr()
     // We will probably read out the input file to an array
