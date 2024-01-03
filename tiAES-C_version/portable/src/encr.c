@@ -108,7 +108,7 @@ void encr() {
 
 /* Implement CBC mode */
 void cbcenc() {
-    int r,c,s,b,sz,bsz;
+    int i,r,c,s,b,sz,bsz;
     uchar ch,pd;
 
     // Size of input file 
@@ -123,8 +123,8 @@ void cbcenc() {
         pd = 16;
     }
     bsz = (sz + pd);
-    printf("padding: %x \n", pd);
-    printf("size: %x \n", sz);
+    //printf("padding: %x \n", pd);
+    //printf("size: %x \n", sz);
     
 
     // Next, read the bytes into an uchar array,
@@ -141,11 +141,13 @@ void cbcenc() {
     fclose(in);
 
     //read out barr[] to check
+    /*
     printf("input bytes:\n");
-    for (int i=0; i<bsz; i++) {
+    for (i=0; i<bsz; i++) {
         printf("%x ", barr[i]);
     }
     printf("\n");
+    */
 
     // Get Initialization Vector block
     s = 60;
@@ -157,8 +159,9 @@ void cbcenc() {
     }
 
     
-    // Do encryption and write to the output file.
-    int i = 0;
+    // Do encryption reading from byte array and write
+    // to the output file. Close file.
+    i = 0;
     while (i < bsz) {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
@@ -185,5 +188,10 @@ void cbcenc() {
         }
     }
     fclose(out);
+    // Zero out keymaterial, state and byte array
+    memset(w, 0, 64*4*sizeof(w[0][0]));
+    memset(iv, 0, 16*sizeof(iv[0][0]));
+    memset(st, 0, 16*sizeof(st[0][0]));
+    memset(barr, 0, bsz*sizeof(barr[0]));
 }//end cbcenc()
 
