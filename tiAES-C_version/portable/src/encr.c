@@ -108,49 +108,75 @@ void encr() {
 
 /* Implement CBC mode */
 void cbcenc() {
-    int r,c,s,sz,pd;
-    uchar ch;
-    sz = sizeof(in);
+    int r,c,s,b,sz,bsz;
+    uchar ch,pd;
 
-    //Get Initialization Vector block and fill temp block
+    // Size of input file 
+    fseek(in, 0, SEEK_END);
+    sz = ftell(in);
+    fseek(in, 0, SEEK_SET);
+
+    // Get padding size, add to sz for byte array size.
+    if ((sz%16) > 0) {
+        pd = (16-(sz%16));
+    } else {
+        pd = 16;
+    }
+    bsz = (sz + pd);
+    printf("padding: %x \n", pd);
+    printf("size: %x \n", sz);
+    
+
+    // Next, read the bytes into an uchar array,
+    // pad with padding bytes, close input file
+    uchar barr[bsz];
+    for (b=0; b<sz; b++) {
+        if ((ch=fgetc(in)) != EOF) {
+            barr[b] = (uchar) ch;
+        }
+    }
+    for (b=sz; b<bsz; b++) {
+        barr[b] = (uchar) pd;
+    }
+    fclose(in);
+
+    //read out barr[] to check
+    printf("input bytes:\n");
+    for (int i=0; i<bsz; i++) {
+        printf("%x ", barr[i]);
+    }
+    printf("\n");
+
+    // Get Initialization Vector block
     s = 60;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
              iv[r][c] = w[s][c];
-             tb[r][c] = 0;
         }
         s++;
     }
 
-    /*get padding size, add to sz
-      This will go away in favor of
-      PKCS padding scheme*/
-    if ((sz%16) > 0) sz += (16-(sz%16));
     
-    // This is sending on block at a time to encr()
-    // We will probably read out the input file to an array
-    // the size of the file plus the padding, then do the
-    // encryption and write to the output file.
-    for (int i=1; i<=sz; i+=16) {
+    // Do encryption and write to the output file.
+    int i = 0;
+    while (i < bsz) {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
-                if ((ch=fgetc(in)) != EOF) {
-                   st[r][c] = (uchar)  ch;
-                } else { //pad the block
-                   st[r][c] = 0;
-                }
+                st[r][c] = barr[i];
+		i++;
             }
         }
-        //st = st^iv;
+        // State = state xor IV
         for (r=0; r<4; r++) {
             for (c=0; c<4; c++) {
                 st[r][c] = st[r][c] ^ iv[r][c];
             }
         }
-        //call encr()
+        // Call encr()
         encr();
+	// Copy state to next IV
         cpyst_iv();
-        //write bytes to outfile by column
+        // Write bytes to outfile by _column_!
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 ch = st[r][c];
@@ -158,5 +184,6 @@ void cbcenc() {
             }
         }
     }
+    fclose(out);
 }//end cbcenc()
 

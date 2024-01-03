@@ -47,8 +47,8 @@ int main(int argc, char *argv[]) {
         printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
     }
 
-    fclose(in);
-    fclose(out);
+    //fclose(in);
+    //fclose(out);
 
     return 0;
 }
