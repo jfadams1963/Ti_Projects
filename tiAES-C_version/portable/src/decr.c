@@ -108,10 +108,17 @@ void decr() {
 
 /* Implement CBC mode */
 void cbcdec() {
-    int r,c,s,sz;
-	uchar ch;
-    sz=sizeof (in);
-    
+    int i,r,c,s,b,bsz,sz;
+    uchar ch,pd;
+
+    // Size of input file 
+    fseek(in, 0, SEEK_END);
+    bsz = ftell(in);
+    fseek(in, 0, SEEK_SET);
+
+    // print size
+    //printf("\ninput size: %d\n", bsz);
+
     //Get IV block and fill temp block
     s = 60;
     for (r=0; r<4; r++) {
@@ -122,35 +129,63 @@ void cbcdec() {
         s++;
     }
 
-    // This is processing one block at a time
-    // We might want to write the decrypted bytes to
-    // an array, then write out to the output file
-    // and truncate the padding bytes.
-    for (int i=1; i<=sz; i+=16) {
+    // Do decryption reading from byte array and write
+    // to the output file. Close file.
+    uchar barr[bsz];
+    i = 0;
+    while (i < bsz) {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
-                if ((ch=fgetc(in)) != EOF) {
-                   st[r][c] =  (uchar) ch;
-                }
+                st[r][c] =  fgetc(in);
             }
         }
         cpyst_tb();
-        //call decr()
+        // Call decr()
         decr();
-        //st^=iv;
+        // State = state xor IV
         for (r=0; r<4; r++) {
 	    for (c=0; c<4; c++) {
                 st[r][c] = st[r][c] ^ iv[r][c];
             }
         }
         cpytb_iv();
-        //write bytes to outfile by column
+        // Write decrypted bytes to byte array  by column
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
-                ch = st[r][c];
-                fputc(ch, out);
+                barr[i]  = st[r][c];
+                i++;
             }
         }
     }        
+    fclose(in);
+    // Zero out keymaterial and state 
+    memset(w, 0, 64*4*sizeof(w[0][0]));
+    memset(tb, 0, 16*sizeof(tb[0][0]));
+    memset(iv, 0, 16*sizeof(iv[0][0]));
+    memset(st, 0, 16*sizeof(st[0][0]));
+
+    //read out barr[] to check
+    /*
+    printf("output bytes:\n");
+    for (i=0; i<bsz; i++) {
+        printf("%x ", barr[i]);
+    }
+    printf("\n");
+    */
+
+    // Get the padding value and truncate byte array
+    pd = barr[bsz-1];
+    sz = bsz - pd;
+    //printf("padding size: %x\n", pd);
+    //printf("outfile size: %x\n", sz);
+ 
+    // Write the array to out file
+    for (i=0; i<sz; i++) {
+        fputc(barr[i], out);
+    }
+    fclose(out);
+
+    // Zero out byte array
+    memset(barr, 0, bsz*sizeof(barr[0]));
 }//end cbcdec()
 

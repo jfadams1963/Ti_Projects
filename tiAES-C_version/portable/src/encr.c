@@ -1,5 +1,5 @@
 //encr.c
-//(c) 2023 J Adams jfa63@duck.com
+//(c) 2023 2024 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
 //Subroutines are labeled with the FIPS 197 nomenclature.
 
