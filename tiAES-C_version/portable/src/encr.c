@@ -177,7 +177,7 @@ void cbcenc() {
         }
         // Call encr()
         encr();
-	// Copy state to next IV
+        // Copy state to next IV
         cpyst_iv();
         // Write bytes to outfile by _column_!
         for (c=0; c<4; c++) {
