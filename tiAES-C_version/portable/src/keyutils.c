@@ -1,5 +1,5 @@
 // keyutils.c
-//(c) 2023 J Adams jfa63@duck.com
+//(c) 2023 2024 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
 /*
 Functions are labeled with the FIPS 197
@@ -55,16 +55,18 @@ KeyExpansion() to generate the key schedule.
 */
 void ke() {
     int r,c,t,e;
-	unsigned int i;
-	nk = 8;
-	nr = 14;
+    // I'm not sure why I used unsigned
+    // but we'll keep it.
+    unsigned int i;
+    nk = 8;
+    nr = 14;
 
     //load primary key at the top of key schedule
-	i = 0;
+    i = 0;
     for (r=0; r<nk; r++) {
         for (c=0; c<NB; c++) {
             w[r][c] = key[i];
-			i++;
+            i++;
         }
     }
 
@@ -76,17 +78,17 @@ void ke() {
             subword();
             rcwd[0] = rcons[i/nk];
             //tmp ^= rcwd;
-			for (t=0; t<4; t++) {
-				tmp[t] = tmp[t] ^ rcwd[t];
-			}
+            for (t=0; t<4; t++) {
+                tmp[t] = tmp[t] ^ rcwd[t];
+            }
         } else if ((nk > 6) && (i % nk)==4) {
             subword();
         }
         getrow(i-nk);
         //wrow ^= tmp;
-		for (e=0; e<4; e++) {
-			wrow[e] = wrow[e] ^ tmp[e];
-		}
+        for (e=0; e<4; e++) {
+            wrow[e] = wrow[e] ^ tmp[e];
+        }
         putrow(i);
     }
 }// end of ke()

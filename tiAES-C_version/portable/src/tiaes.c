@@ -1,5 +1,5 @@
 //tiaes.c
-//(c) 2023 J Adams jfa63@duck.com
+//(c) 2023 2024 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
 
 /*
@@ -30,12 +30,13 @@ int main(int argc, char *argv[]) {
     i = 0;
     while ((i < sz) && (i < 32) ) {
         key[i] = pwd[i];
-	i++;
+        i++;
     }
 
     ke();
 
-    //open the file handles
+    // Open the file handles
+    // We close them in cbcdec() and cbcenc()
     in = fopen(argv[2],"rb");
     out = fopen(argv[3],"wb");
 
@@ -47,9 +48,6 @@ int main(int argc, char *argv[]) {
         printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
     }
 
-    //fclose(in);
-    //fclose(out);
-
     return 0;
 }
-    
+ 

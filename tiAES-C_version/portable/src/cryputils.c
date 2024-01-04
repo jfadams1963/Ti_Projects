@@ -2,8 +2,8 @@
 //(c) 2023 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
 
-
 #include "core.h"
+
 
 //copy new state to state
 void cpyns_st() {
