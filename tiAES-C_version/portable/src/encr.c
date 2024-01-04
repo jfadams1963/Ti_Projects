@@ -5,6 +5,7 @@
 
 #include "core.h"
 
+
 /* AES Cipher() */
 void encr() {
     int c,r,rd = 0;
@@ -163,6 +164,7 @@ void cbcenc() {
     // to the output file. Close file.
     i = 0;
     while (i < bsz) {
+        // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 st[r][c] = barr[i];
@@ -179,7 +181,7 @@ void cbcenc() {
         encr();
         // Copy state to next IV
         cpyst_iv();
-        // Write bytes to outfile by _column_!
+        // Write bytes to outfile by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 ch = st[r][c];

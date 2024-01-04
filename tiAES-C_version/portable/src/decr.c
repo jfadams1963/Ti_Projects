@@ -5,6 +5,7 @@
 
 #include "core.h"
 
+
 /* AES InvCipher() */
 void decr() {
     int r,c,rd;
@@ -134,6 +135,7 @@ void cbcdec() {
     uchar barr[bsz];
     i = 0;
     while (i < bsz) {
+        // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 st[r][c] =  fgetc(in);
@@ -149,7 +151,7 @@ void cbcdec() {
             }
         }
         cpytb_iv();
-        // Write decrypted bytes to byte array  by column
+        // Write decrypted bytes to byte array by _column_.
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 barr[i]  = st[r][c];
