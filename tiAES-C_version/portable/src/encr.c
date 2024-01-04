@@ -168,7 +168,7 @@ void cbcenc() {
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 st[r][c] = barr[i];
-		i++;
+                i++;
             }
         }
         // State = state xor IV
