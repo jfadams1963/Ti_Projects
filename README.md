@@ -12,5 +12,7 @@ https://www.ticalc.org/archives/files/fileinfo/347/34726.html
 Note the following replacements in these text files:  
 + the comment (copyright) symbol, &copy;, is replaced by '(c)',
 + the right arrow, &rarr;, used for variable assignment is replaced by '->',
++ the compination '!=' is used for "not equal to",
++ similarly, '<=' and '>=' are used for "less than or equal to" and "greater than or equal to",
 + the matrix transpose superscript is replaced by '^T'.
 
