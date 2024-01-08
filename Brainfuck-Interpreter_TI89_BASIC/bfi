@@ -34,6 +34,7 @@ For ip,1,cz
     EndIf
 EndFor
 
+(c) If uneven brackets, launch bracket counter
 If brks!=0 Then
   Disp "Uneven brakets"
   brkcnt(prog)
@@ -92,7 +93,7 @@ For ip,1,psz
       ip-1->ip
     EndWhile
 
-  (c) Decriment mem pointer
+  (c) Decrement mem pointer
   ElseIf op="<" Then
     mp-1->mp
     If mp<=0 Then
