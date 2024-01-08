@@ -6,3 +6,11 @@ https://brainfuck.org/
 
 Wikipedia has a good overview and history:  
 https://en.wikipedia.org/wiki/Brainfuck  
+
+
+About This Version  
+
+This version is based on the TI-89 code on Rosetta Code:  
+https://rosettacode.org/wiki/Execute_Brain****/TI-89_BASIC  
+
+I had to make some corrections before making changes/addition.
