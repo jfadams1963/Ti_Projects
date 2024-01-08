@@ -369,9 +369,12 @@ def cbcencr(fname: str, key: np.ndarray):
                 # Flatten state by column
                 fst = stb.flatten(order='F')
                 # This writes the flattend blocks to file
-                for b in range(16):
-                    of.seek(b+i)
-                    of.write(np.uint8(fst[b]))
+                if len(fst) != 16:
+                    raise Exception(f'fst is length {len(fst)}')
+                of.write(bytearray(fst))
+                #for b in range(16):
+                #    of.seek(b+i)
+                #    of.write(np.uint8(fst[b]))
                 # Set i
                 i = of.tell()
             # End while
@@ -440,9 +443,10 @@ def cbcdecr(fname: str, key: np.ndarray):
                 # Flatten state by column
                 fst = stb.flatten(order='F')
                 # This writes the flattend blocks to file
-                for b in range(16):
-                    of.seek(b+i)
-                    of.write(np.uint8(fst[b]))
+                of.write(bytearray(fst))
+                #for b in range(16):
+                #    of.seek(b+i)
+                #    of.write(np.uint8(fst[b]))
                 # Set i
                 i = of.tell()
             # Get last byte value = padding bytes
