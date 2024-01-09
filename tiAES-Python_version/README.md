@@ -2,7 +2,7 @@
 # tiAES-Python
 tiAES: AES for the TI nSpire CX II  
 
-ABOUT  
+__ABOUT__  
 
 tiAES software was developed as and educational tool for the purposes of demonstrating and teaching the basic principles of AES cryptography.   
 
@@ -11,7 +11,7 @@ tiAES is free and open source software released under the 2-clause BSD license. 
 It is meant to be run on any system with python 3.x and the NumPy library installed. It will eventually be able to run on the TI nSpire CX II with the Ulab library providing numpy classes and methods. It's not quite there yet, and anyone interested is encouraged to hack away at it.  
 
 
-USAGE  
+__USAGE__  
 
 Download the files tiAES.py and pyaes_tables.py and put them in the same directory. Other than the standard Python libraries, you will need NumPy installed:   
 
@@ -38,7 +38,7 @@ The decrypt will look for the file extension '.enc'. To decrypt:
 
 which will write the file filename.dec.  
 
-STATUS  
+__STATUS__  
 
 This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is an SHA256 hash of the passphrase providing a 32byte/256bit key.  
 
@@ -48,7 +48,7 @@ https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf
 
 While it works, we cannot make any claims as to how secure the coding is nor is it very fast on large files. Do not use this code for anything other that personal education and enjoyment.  
 
-Notes on reading and writing blocks  
+__Notes on reading and writing blocks__  
 
 We use numpy.fromfile() to read bytes into a byte array: We will read blocks of 16 bytes into a vector, then use reshape(4,4,order='F') to create a new state block, which then is encr|decr, flattened, then written to outfile. Order 'F' loads the bytes into a block by column.  
 
@@ -73,7 +73,7 @@ To write out state blocks, we call sv = st.flatten(order='F') on each block, the
 [04 08 12 16]
 ```
 
-Notes on block padding  
+__Notes on block padding__  
 
     padding_bytes = block_size - (message_length % block_size)  
     where block_size = 16  
@@ -83,7 +83,7 @@ Padding bytes are appended to the file's byte array _before_ encryption. The val
 After decryption, the last byte is read and assigned to padding_bytes, which is the number of bytes to be truncated.  
 https://www.ibm.com/docs/en/zos/3.1.0?topic=rules-pkcs-padding-method  
 
-Notes on using the ulab library in place of numpy in MicroPython  
+__Notes on using the ulab library in place of numpy in MicroPython__  
 
 Use of ulab in place of numpy in MicroPython supplies a good amount of numpy functionality however, two important methods are currently missing: fromfile() and append(), both of which are used here. This matters to the author in as much as it was hoped that this code could run on the TI nSpire cx calculators using ulab.  
 
@@ -93,6 +93,6 @@ from ulab import numpy as np
 ```
 In the mean time, the existing code can be reworked to get around the use of fromfile() and append().    
 
-TUTORIAL  
+__TUTORIAL__  
 
 I have outlined a tutorial which will eventually end up here.
