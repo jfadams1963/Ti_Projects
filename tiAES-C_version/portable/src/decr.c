@@ -117,9 +117,6 @@ void cbcdec() {
     bsz = ftell(in);
     fseek(in, 0, SEEK_SET);
 
-    // print size
-    //printf("\ninput size: %d\n", bsz);
-
     //Get IV block and fill temp block
     s = 60;
     for (r=0; r<4; r++) {
@@ -166,20 +163,9 @@ void cbcdec() {
     memset(iv, 0, 16*sizeof(iv[0][0]));
     memset(st, 0, 16*sizeof(st[0][0]));
 
-    //read out barr[] to check
-    /*
-    printf("output bytes:\n");
-    for (i=0; i<bsz; i++) {
-        printf("%x ", barr[i]);
-    }
-    printf("\n");
-    */
-
-    // Get the padding value and truncate byte array
+    // Get the padding value to truncate byte array
     pd = barr[bsz-1];
     sz = bsz - pd;
-    //printf("padding size: %x\n", pd);
-    //printf("outfile size: %x\n", sz);
  
     // Write the array to out file
     for (i=0; i<sz; i++) {

@@ -124,9 +124,6 @@ void cbcenc() {
         pd = 16;
     }
     bsz = (sz + pd);
-    //printf("padding: %x \n", pd);
-    //printf("size: %x \n", sz);
-    
 
     // Next, read the bytes into an uchar array,
     // pad with padding bytes, close input file
@@ -140,15 +137,6 @@ void cbcenc() {
         barr[b] = (uchar) pd;
     }
     fclose(in);
-
-    //read out barr[] to check
-    /*
-    printf("input bytes:\n");
-    for (i=0; i<bsz; i++) {
-        printf("%x ", barr[i]);
-    }
-    printf("\n");
-    */
 
     // Get Initialization Vector block
     s = 60;
