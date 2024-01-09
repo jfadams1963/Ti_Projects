@@ -7,7 +7,7 @@ It is a very simple (simple minded?) implementation of AES, but produces FIPS
 compliant output. It is not suitable for real world usage, but only serves as
 an educational excercise.  
 
-STATUS  
+__STATUS__  
 
 The program encyrpts and decrypts files of any size using CBC mode AES with PKCS padding.  
 
