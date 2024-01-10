@@ -492,7 +492,7 @@ def get_args() -> tuple[bool, str, str]:
 # End get_args
 
 
-def get_passkey() -> np.array:
+def get_passkey() -> np.ndarray:
     """
     Get passphrase, generate key with sha256
     """
