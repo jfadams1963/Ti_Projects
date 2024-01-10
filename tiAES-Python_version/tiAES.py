@@ -352,7 +352,7 @@ def cbcencr(fname: str, key: np.ndarray):
             # at a time, load them into a 4x4 state block
             # array (stb) encrypt, flatten (fst) then write
             # to outfile each time.
-            # Note that we do state xor IV _before_ we encrypt.
+            # Note that we do (state xor IV) _before_ we encrypt.
             # The new state becomes the IV for the next CBC round.
 
             i = 0
@@ -421,7 +421,7 @@ def cbcdecr(fname: str, key: np.ndarray):
             # at a time, load them into a 4x4 state block
             # array (stb) decrypt, flatten (fst) then write
             # to outfile each time.
-            # Note that we do stat xor IV _after_ we decrypt.
+            # Note that we do (state xor IV) _after_ we decrypt.
             # The new state becomes the IV for the next CBC round.
 
             i = 0
