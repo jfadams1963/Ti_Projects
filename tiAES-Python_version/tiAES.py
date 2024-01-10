@@ -462,7 +462,7 @@ def cbcdecr(fname: str, key: np.ndarray):
 # End cbcdecr
 
 
-def get_args() -> tuple[bool, str]:
+def get_args() -> tuple[bool, str, str]:
     """
     Handle args, return args tuple
     """
@@ -477,7 +477,7 @@ def get_args() -> tuple[bool, str]:
 
     if args.encrypt:
         print('Encrypt', args.filename)
-        return (True, args.filename)
+        return (True, args.filename, '')
     elif args.decrypt:
         fsplit = os.path.splitext(args.filename)
         if fsplit[1] == '.enc':
@@ -486,16 +486,16 @@ def get_args() -> tuple[bool, str]:
             print('The file does not have the .enc extension.')
             print("We don't know if it was actually encrypted with PyAES.")
             sys.exit()
-        return  (False, args.filename)
+        return  (False, args.filename, fsplit[0])
     else:
         sys.exit()
 # End get_args
 
 
-def main():
-    argumnts = get_args()
-    do_encr,file = argumnts[0],argumnts[1]
-
+def get_passkey() -> np.array:
+    """
+    Get passphrase, generate key with sha256
+    """
     # Make sure pwd is 16 characters min
     plen = 1
     while plen < 16:
@@ -511,22 +511,29 @@ def main():
         pwd[i] = b
     del phsh, pstr, plen
     gc.collect()
+    return pwd
+# End get_passkey
 
-    # Build key schedule
-    key = KeyExpansion(pwd)
+
+def main():
+    # Get and set arguments
+    do_encr,file,fsplt = get_args()
+
+    # Prompt for passphrase, build key schedule
+    pw = get_passkey()
+    key = KeyExpansion(pw)
 
     try:
         if do_encr is True:
             print('We will now encrypt', file, 'to '+file+'.enc')
             cbcencr(file, key)
         elif do_encr is False:
-            fsplit = os.path.splitext(file)
-            print('We will now decrypt', file, 'to '+fsplit[0]+'.dec')
+            print('We will now decrypt', file, 'to '+fsplt+'.dec')
             cbcdecr(file, key)
     except Exception as e:
         print(e)
     finally:
-        del pwd, key
+        del pw, key
         gc.collect()
 # End main
 
