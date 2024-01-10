@@ -2,6 +2,7 @@
 # tiAES.py
 # (c) 2024 J. Adams jfa63@duck.com
 # Released under the 2-clause BSD Licence
+# Thanks to jfx2006 for contributions and advice.
 
 """
   This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
@@ -372,9 +373,6 @@ def cbcencr(fname: str, key: np.ndarray):
                 if len(fst) != 16:
                     raise Exception(f'fst is length {len(fst)}')
                 of.write(bytearray(fst))
-                #for b in range(16):
-                #    of.seek(b+i)
-                #    of.write(np.uint8(fst[b]))
                 # Set i
                 i = of.tell()
             # End while
@@ -443,10 +441,9 @@ def cbcdecr(fname: str, key: np.ndarray):
                 # Flatten state by column
                 fst = stb.flatten(order='F')
                 # This writes the flattend blocks to file
+                if len(fst) != 16:
+                    raise Exception(f'fst is length {len(fst)}')
                 of.write(bytearray(fst))
-                #for b in range(16):
-                #    of.seek(b+i)
-                #    of.write(np.uint8(fst[b]))
                 # Set i
                 i = of.tell()
             # Get last byte value = padding bytes
@@ -465,10 +462,10 @@ def cbcdecr(fname: str, key: np.ndarray):
 # End cbcdecr
 
 
-def main():
-    do_encr = None
-    
-    # Handle args
+def get_args() -> tuple[bool, str]:
+    """
+    Handle args, return args tuple
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('-e', '--encrypt', help='Encrypt <filename>',
                         action='store_true')
@@ -480,7 +477,7 @@ def main():
 
     if args.encrypt:
         print('Encrypt', args.filename)
-        do_encr = True
+        return (True, args.filename)
     elif args.decrypt:
         fsplit = os.path.splitext(args.filename)
         if fsplit[1] == '.enc':
@@ -489,9 +486,15 @@ def main():
             print('The file does not have the .enc extension.')
             print("We don't know if it was actually encrypted with PyAES.")
             sys.exit()
-        do_encr = False
+        return  (False, args.filename)
     else:
         sys.exit()
+# End get_args
+
+
+def main():
+    argumnts = get_args()
+    do_encr,file = argumnts[0],argumnts[1]
 
     # Make sure pwd is 16 characters min
     plen = 1
@@ -509,26 +512,25 @@ def main():
     del phsh, pstr, plen
     gc.collect()
 
+    # Build key schedule
     key = KeyExpansion(pwd)
 
-    if do_encr is True:
-        print('We will now encrypt', args.filename, 'to '+args.filename+'.enc')
-        cbcencr(args.filename, key)
+    try:
+        if do_encr is True:
+            print('We will now encrypt', file, 'to '+file+'.enc')
+            cbcencr(file, key)
+        elif do_encr is False:
+            fsplit = os.path.splitext(file)
+            print('We will now decrypt', file, 'to '+fsplit[0]+'.dec')
+            cbcdecr(file, key)
+    except Exception as e:
+        print(e)
+    finally:
         del pwd, key
         gc.collect()
-    elif do_encr is False:
-        fstrp = fsplit[0]
-        print('We will now decrypt', args.filename, 'to '+fstrp+'.dec')
-        cbcdecr(args.filename, key)
-        del pwd, key
-        gc.collect()
-    else:
-        sys.exit()
-
 # End main
 
 
 if __name__ == '__main__':
     main()
-
 
