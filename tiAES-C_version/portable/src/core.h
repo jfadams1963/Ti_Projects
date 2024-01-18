@@ -11,14 +11,6 @@
 #include "cryputils.h"
 #endif
 
-/*
-#ifndef KEYUTILS_H
-#define KEYUTILS_H
-#include "keyutils.h"
-#endif
-*/
-
-
 //word bytes
 #define NB 4
 
@@ -37,4 +29,3 @@ unsigned int nr = 14;
 unsigned char w[64][4];
 FILE *in,*out;
 unsigned char key[32];
-
