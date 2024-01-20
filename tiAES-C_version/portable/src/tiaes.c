@@ -24,16 +24,9 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    uchar *pwd = getpass("Password: ");
-
-    sz = sizeof(pwd);
-    i = 0;
-    while ((i < sz) && (i < 32) ) {
-        key[i] = pwd[i];
-        i++;
-    }
-
-    ke();
+    char *pwd = getpass("Password: ");
+    char *key =  SHA256(pwd);
+    ke(key);
 
     // Open the file handles
     // We close them in cbcdec() and cbcenc()

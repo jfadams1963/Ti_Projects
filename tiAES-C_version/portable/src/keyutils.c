@@ -53,7 +53,7 @@ void putrow(int r) {
 /*
 KeyExpansion() to generate the key schedule.
 */
-void ke() {
+void ke(char* key) {
     int r,c,t,e;
     // I'm not sure why I used unsigned
     // but we'll keep it.
