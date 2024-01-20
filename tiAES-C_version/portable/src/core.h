@@ -1,5 +1,5 @@
 //core.h
-//(c) 2023 J Adams jfa63@duck.com
+//(c) 2023 2024 J Adams jfa63@duck.com
 //Released under the 2-clause BSD license.
 
 #include <stdio.h>
