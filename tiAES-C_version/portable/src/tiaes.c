@@ -24,8 +24,10 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    char *pwd = getpass("Password: ");
+    char *pwd = getpass("Passphrase: ");
+    // Use the 256-bit hash of the passphrase as the key.
     char *key =  SHA256(pwd);
+    // Do key expansion
     ke(key);
 
     // Open the file handles

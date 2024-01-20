@@ -8,8 +8,12 @@ nomenclature.
 
 #include "core.h"
 
+// Round-key constants
 unsigned char rcons[]={0,1,2,4,8,16,32,64,128,27,54,108,216};
+
+// Temporary round-key word (vector)
 unsigned char rcwd[]={0,0,0,0};
+
 word tmp,wrow;
 
 /* SubWord() */
@@ -77,7 +81,7 @@ void ke(char* key) {
             rotword();
             subword();
             rcwd[0] = rcons[i/nk];
-            //tmp ^= rcwd;
+            //temprow xor rcword
             for (t=0; t<4; t++) {
                 tmp[t] = tmp[t] ^ rcwd[t];
             }
@@ -85,7 +89,7 @@ void ke(char* key) {
             subword();
         }
         getrow(i-nk);
-        //wrow ^= tmp;
+        //wrow xor temprow
         for (e=0; e<4; e++) {
             wrow[e] = wrow[e] ^ tmp[e];
         }
