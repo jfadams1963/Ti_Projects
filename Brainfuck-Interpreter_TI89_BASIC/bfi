@@ -36,6 +36,10 @@ If brks!=0 Then
   Goto end
 EndIf
 
+
+(c) Run code
+Lbl run
+
 (c) Let's do a sanity check and
 (c) strip out non-code symbols.
 For ip,1,cz
@@ -44,8 +48,6 @@ For ip,1,cz
     prog&op->prog
 EndFor
 
-(c) Run code
-Lbl run
 dim(prog)-psz
 
 For ip,1,psz
