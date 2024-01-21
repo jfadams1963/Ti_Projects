@@ -20,7 +20,9 @@ For ip,1,cz
 EndFor
 
 (c) Check for bracket validation
-(c) If validated, skip check
+(c) Validate by prepending your BF code
+(c) with "b1" if you know it runs.
+(c) If validated, the check is skipped.
 If left(cd,2)="b1"
   Goto run
 
