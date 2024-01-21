@@ -1,10 +1,5 @@
-ant(point)
+ant()
 Prgm
-(c) list
-(c) {x,y}, where x and y
-(c) are the starting
-(c) coodinates.
-
 (c) Langton's Ant
 (c) Cellular Automaton
 
