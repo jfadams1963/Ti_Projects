@@ -18,7 +18,7 @@ void encr() {
     }
 
     //rounds 1 to nr-1
-    for (rd=1; rd<(nr-1); rd++) {
+    for (rd=1; rd<nr; rd++) {
         /*SubBytes()*/
         for (r=0; r<4; r++) {
             for (c=0; c<4; c++) {
@@ -101,7 +101,7 @@ void encr() {
     //round nr
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-            st[c][r] ^= w[(nr-1)*4+r][c];
+            st[c][r] ^= w[rd*4+r][c];
         }
     }
 }//end decr()

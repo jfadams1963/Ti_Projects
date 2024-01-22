@@ -13,12 +13,12 @@ void decr() {
     /* AddRoundKey() (colomn of state) xor (row of RoundKey) */
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-            st[c][r] ^= w[(nr-1)*4+r][c];
+            st[c][r] ^= w[nr*4+r][c];
         }
     }
 
     //rounds nr-1 down to 1
-    for (rd=nr-2; rd>0; rd--) {
+    for (rd=nr-1; rd>0; rd--) {
         /* InvShiftRows() */
         //row 1, no rotation
         ns[0][0] = st[0][0];
