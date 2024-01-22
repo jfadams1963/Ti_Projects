@@ -12,15 +12,10 @@ newList(64)-mem
 1->mp
 dim(cd)->cz
 
-(c) Let's do a sanity check
-For ip,1,cz
-  mid(cd,ip,1)->op
-  If inString(valid,op)>0
-    prog&op->prog
-EndFor
-
 (c) Check for bracket validation
-(c) If validated, skip check
+(c) Validate by prepending your BF code
+(c) with "b1" if you know it runs.
+(c) If validated, the check is skipped.
 If left(cd,2)="b1"
   Goto run
 
@@ -41,8 +36,18 @@ If brks!=0 Then
   Goto end
 EndIf
 
+
 (c) Run code
 Lbl run
+
+(c) Let's do a sanity check and
+(c) strip out non-code symbols.
+For ip,1,cz
+  mid(cd,ip,1)->op
+  If inString(valid,op)>0
+    prog&op->prog
+EndFor
+
 dim(prog)-psz
 
 For ip,1,psz
