@@ -117,7 +117,7 @@ void cbcdec() {
     bsz = ftell(in);
     fseek(in, 0, SEEK_SET);
 
-    //Get IV block and fill temp block
+    //Get IV block from key schedule and fill the temp block
     s = 60;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {

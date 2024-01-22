@@ -65,7 +65,7 @@ void encr() {
                 st[c][r] ^= w[rd*4+r][c];
             }
         }
-    }//end rounds nr-1 to 1
+    }//end rounds 1 to nr-1
 
     /* SubBytes() */
     for (r=0; r<4; r++) {
@@ -138,7 +138,7 @@ void cbcenc() {
     }
     fclose(in);
 
-    // Get Initialization Vector block
+    // Get Initialization Vector block from key schedule
     s = 60;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
