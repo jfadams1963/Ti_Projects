@@ -8,7 +8,9 @@
 
 /* AES Cipher() */
 void encr() {
+
     int c,r,rd = 0;
+
     /* AddRoundKey()  (column of state) xor (row of RoundKey) */
     //round number 0
     for (r=0; r<4; r++) {
@@ -127,7 +129,7 @@ void cbcenc() {
 
     // Next, read the bytes into an uchar array,
     // pad with padding bytes, close input file
-    uchar barr[bsz];
+    uchar* barr = malloc(bsz);
     for (b=0; b<sz; b++) {
         if ((ch=fgetc(in)) != EOF) {
             barr[b] = (uchar) ch;
@@ -180,6 +182,7 @@ void cbcenc() {
     // Zero out keymaterial, state and byte array
     memset(w, 0, 64*4*sizeof(w[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
+    memset(ns, 0, 16*sizeof(ns[0][0]));
     memset(st, 0, 16*sizeof(st[0][0]));
     memset(barr, 0, bsz*sizeof(barr[0]));
 }//end cbcenc()

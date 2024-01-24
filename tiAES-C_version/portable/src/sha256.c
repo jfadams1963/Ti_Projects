@@ -155,7 +155,7 @@ unsigned char* SHA256(char* data) { // Changed return type from char pointer
     int strLen = strlen(data);
     SHA256_CTX ctx;
     // We need a uchar array for tiAES -jfadams1963
-    uchar* hash = malloc(32);
+    uchar* hash = malloc(32); // Memory deallocated in tiaes.c main()
     //unsigned char hash[32];
     //char* hashStr = malloc(65);
     //strcpy(hashStr, "");

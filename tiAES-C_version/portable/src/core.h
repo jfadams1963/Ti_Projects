@@ -20,10 +20,8 @@ typedef unsigned char uchar;
 typedef unsigned char block[4][4];
 typedef unsigned char word[4];
 
-//state blocks
-block st,ns,iv,tb;
-
-//globals
+//Globals
+block st,tb,ns,iv; //state blocks
 unsigned int nk = 8;
 unsigned int nr = 14;
 unsigned char w[64][4];

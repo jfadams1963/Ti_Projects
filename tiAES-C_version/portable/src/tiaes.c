@@ -32,6 +32,9 @@ int main(int argc, char *argv[]) {
 
     // Do key expansion
     ke(key);
+    // Zero-out and deallocate key memory location.
+    memset(key, 0, 32*sizeof(key[0]));
+    free(key);
 
     // Open the file handles
     // We close them in cbcdec() and cbcenc()
