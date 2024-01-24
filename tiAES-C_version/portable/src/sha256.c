@@ -3,6 +3,7 @@ This code came from example code at:
 https://www.programmingalgorithms.com/algorithm/sha256/c/
 See Terms of Use at:
 https://www.programmingalgorithms.com/terms-of-use/
+Modifications by J Adams jfadams1963, jfa63@duck.com
  */
 
 #include <stdio.h>
@@ -150,9 +151,10 @@ void SHA256Final(SHA256_CTX *ctx, uchar hash[])
     }
 }
 
-unsigned char* SHA256(char* data) {
+unsigned char* SHA256(char* data) { // Changed return type from char pointer
     int strLen = strlen(data);
     SHA256_CTX ctx;
+    // We need a uchar array for tiAES -jfadams1963
     uchar* hash = malloc(32);
     //unsigned char hash[32];
     //char* hashStr = malloc(65);
@@ -160,7 +162,7 @@ unsigned char* SHA256(char* data) {
 
     SHA256Init(&ctx);
     SHA256Update(&ctx, (uchar*) data, strLen); // need to cast as uchar* -jfadams1963
-    SHA256Final(&ctx, hash);
+    SHA256Final(&ctx, hash);                   // or it won't compile. See line 101.
 
     //char s[3];
     //for (int i = 0; i < 32; i++) {
