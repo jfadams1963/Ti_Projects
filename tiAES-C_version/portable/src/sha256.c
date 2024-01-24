@@ -150,22 +150,24 @@ void SHA256Final(SHA256_CTX *ctx, uchar hash[])
     }
 }
 
-char* SHA256(char* data) {
+unsigned char* SHA256(char* data) {
     int strLen = strlen(data);
     SHA256_CTX ctx;
-    unsigned char hash[32];
-    char* hashStr = malloc(65);
-    strcpy(hashStr, "");
+    uchar* hash = malloc(32);
+    //unsigned char hash[32];
+    //char* hashStr = malloc(65);
+    //strcpy(hashStr, "");
 
     SHA256Init(&ctx);
-    SHA256Update(&ctx, (uchar*) data, strLen); // need to cast as uchar* -jfa1963
+    SHA256Update(&ctx, (uchar*) data, strLen); // need to cast as uchar* -jfadams1963
     SHA256Final(&ctx, hash);
 
-    char s[3];
-    for (int i = 0; i < 32; i++) {
-        sprintf(s, "%02x", hash[i]);
-        strcat(hashStr, s);
-    }
+    //char s[3];
+    //for (int i = 0; i < 32; i++) {
+        //sprintf(s, "%02x", hash[i]);
+        //strcat(hashStr, s);
+    //}
 
-    return hashStr;
+    return hash;
+    //return hashStr;
 }

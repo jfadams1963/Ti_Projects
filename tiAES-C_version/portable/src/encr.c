@@ -146,7 +146,6 @@ void cbcenc() {
         }
         s++;
     }
-
     
     // Do encryption reading from byte array and write
     // to the output file. Close file.

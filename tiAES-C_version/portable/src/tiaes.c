@@ -24,9 +24,11 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    char *pwd = getpass("Passphrase: ");
+    char* pwd = getpass("Passphrase: ");
     // Use the 256-bit hash of the passphrase as the key.
-    char *key =  SHA256(pwd);
+    // The SHA256() function takes a char* as input and returns
+    // a unsigned char pointer.
+    uchar* key =  SHA256(pwd);
 
     // Do key expansion
     ke(key);
