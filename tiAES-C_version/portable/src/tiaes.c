@@ -36,14 +36,15 @@ int main(int argc, char *argv[]) {
     memset(key, 0, 32*sizeof(key[0]));
     free(key);
 
-    // Open the file handles
+    // Open the file handles first.
     // We close them in cbcdec() and cbcenc()
-    in = fopen(argv[2],"rb");
-    out = fopen(argv[3],"wb");
-
     if (*argv[1] == 'e') {
+        in = fopen(argv[2],"rb");
+        out = fopen(argv[3],"wb");
         cbcenc();
     } else if (*argv[1] == 'd') {;
+        in = fopen(argv[2],"rb");
+        out = fopen(argv[3],"wb");
         cbcdec();
     } else {
         printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
