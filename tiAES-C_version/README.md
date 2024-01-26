@@ -3,9 +3,9 @@ AES for the TI-89/90+ in C
 
 The _portable_ version compiles and works without error. The next step is for someone to port it to the TI platform with TIGCC.  
 
-It is a very simple (simple minded?) implementation of AES, but produces FIPS
-compliant output. It is not suitable for real world usage, but only serves as
-an educational excercise.  
+It is a very simple (simple minded?), straight forward implementation of AES using CBC mode (Cipher Block Chaining) and produces FIPS compliant output. It is not suitable for real world usage, but only serves as an educational excercise.  
+
+For convinience, it currently uses 16 extra bytes from the key schedule as the CBC IV (initialization vector). This is not considered best practice. A random IV scheme is in the works.  
 
 It was originally written to take key sizes of 128bit, 192bit and 256bit. This working version is locked in at 256bits by using a SHA256 hash of the entered passphrase as the key.  
 
