@@ -140,15 +140,23 @@ void cbcenc() {
     }
     fclose(in);
 
-    // Get Initialization Vector block from key schedule
-    s = 60;
+    get_iv();
+    // display iv
+    printf("\n");
+    for (int r=0; r<4; r++) {
+        for (int c=0; c<4; c++) {
+            printf("%02x", iv[r][c]);
+        }
+        printf("\n");
+    }
+    // Write the IV to the first 16 bytes of out. 
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-             iv[r][c] = w[s][c];
+            ch = iv[r][c];
+            fputc(ch, out);
         }
-        s++;
     }
-    
+
     // Do encryption reading from byte array and write
     // to the output file. Close file.
     i = 0;

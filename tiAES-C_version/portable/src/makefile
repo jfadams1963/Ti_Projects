@@ -1,5 +1,5 @@
 CC      = cc
-CFLAGS  = -g -w -Wall -Wextra -Wl,--allow-multiple-definition 
+CFLAGS  = -g -w -Wall -Wextra -Wl,--allow-multiple-definition -lssl -lcrypto
 RM      = rm -f
 
 

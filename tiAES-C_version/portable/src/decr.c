@@ -117,14 +117,14 @@ void cbcdec() {
 
     // Size of input file 
     fseek(in, 0, SEEK_END);
-    bsz = ftell(in);
+    bsz = ftell(in) - 16;
     fseek(in, 0, SEEK_SET);
 
-    //Get IV block from key schedule and fill the temp block
+    //Get IV block from the first 16 bytes of in, and fill the temp block
     s = 60;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
-             iv[r][c] = w[s][c];
+             iv[r][c] = fgetc(in);
              tb[r][c] = 0;
         }
         s++;
@@ -133,6 +133,8 @@ void cbcdec() {
     // Do decryption reading from byte array and write
     // to the output file. Close file.
     uchar* barr = malloc(bsz);
+
+    // Use 'i' to index byte array
     i = 0;
     while (i < bsz) {
         // Read bytes into state by _column_ !
@@ -141,6 +143,7 @@ void cbcdec() {
                 st[r][c] =  fgetc(in);
             }
         }
+        // Copy state to temp block
         cpyst_tb();
         // Call decr()
         decr();
@@ -150,6 +153,7 @@ void cbcdec() {
                 st[r][c] = st[r][c] ^ iv[r][c];
             }
         }
+        // Copy temp block to IV
         cpytb_iv();
         // Write decrypted bytes to byte array by _column_.
         for (c=0; c<4; c++) {
@@ -160,6 +164,7 @@ void cbcdec() {
         }
     }        
     fclose(in);
+
     // Zero out keymaterial and state 
     memset(w, 0, 64*4*sizeof(w[0][0]));
     memset(tb, 0, 16*sizeof(tb[0][0]));
