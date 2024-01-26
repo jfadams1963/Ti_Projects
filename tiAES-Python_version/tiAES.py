@@ -20,6 +20,7 @@ import hashlib
 import argparse
 import traceback
 import numpy as np
+from secrets import token_hex
 from getpass import getpass
 from aes_tables import *
 
@@ -41,7 +42,7 @@ def KeyExpansion(key: np.ndarray) -> np.ndarray:
     # Constants defined in FIPS 197
     nk = len(key)//4
     nr = nk + 6
-    wl = NB * (nr + 1) + 4 # We add 4 rows to w length for the CBC IV block
+    wl = NB * (nr + 1)
     
     # Round key constants as row vectors
     rcons = np.array([
@@ -299,6 +300,24 @@ def InvCipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
 # End InvCipher
 
 
+# Generate random IV
+def gen_iv() -> np.ndarray:
+    rn = token_hex(64) 
+    hsh = hashlib.sha256(str.encode(rn)).digest()
+    iv = np.zeros(16, dtype=np.uint8)
+    # We only need 16 bytes from the hash. We could use
+    # MD5 to get only 16, however, it has know vulnerabilities.
+    for i, b in enumerate(hsh):
+        if i == 16:
+            break
+        iv[i] = b
+    del rn, hsh
+    gc.collect()
+    iv = iv.reshape(4, 4)
+    return iv
+# End gen_iv
+
+
 # Encrpyt in CBC mode
 def cbcencr(fname: str, key: np.ndarray):
     """
@@ -308,25 +327,15 @@ def cbcencr(fname: str, key: np.ndarray):
 
     # create an outfile name
     outfile = fname + '.enc'
-    
-    # Get last 4 rows of w for CBC IV
-    s = np.shape(key)[0] - 4
-    r = 0
-    iv = np.zeros((4,4), dtype=np.uint8)
-    for i in range(s, s+4):
-        for j in range(4):
-            iv[r,j] = key[i,j]
-        r += 1
 
     # Open input file for reading
     infile = open(fname, 'r')
-
-    # infile size
     fsz = os.path.getsize(fname)
 
     # Padding so num of bytes is a multiple of 16
     # as per the PKCS padding scheme.
-    pad = 16 - (fsz % 16)
+    pad = 0x10 - (fsz % 0x10)
+
     # If the file size is already a multiple of 16,
     # add one block of 0x10 bytes
     if pad == 0:
@@ -355,6 +364,13 @@ def cbcencr(fname: str, key: np.ndarray):
             # Note that we do (state xor IV) _before_ we encrypt.
             # The new state becomes the IV for the next CBC round.
 
+            # Get our random IV 
+            iv = gen_iv() 
+
+            # Write the IV to the first 16 bytes of the outfile
+            of.write(bytearray(iv.flatten()))
+
+            # The mark 'i' track our position in the padded byte array
             i = 0
             while i < fsz:
                 # Get next 16 bytes from bpd
@@ -373,8 +389,8 @@ def cbcencr(fname: str, key: np.ndarray):
                 if len(fst) != 16:
                     raise Exception(f'fst is length {len(fst)}')
                 of.write(bytearray(fst))
-                # Set i
-                i = of.tell()
+                # Set i 
+                i = of.tell() - 16
             # End while
         # End with, automatic of.close()
     except Exception as e:
@@ -395,15 +411,6 @@ def cbcdecr(fname: str, key: np.ndarray):
     # create an outfile name
     outfile = os.path.splitext(fname)[0] + '.dec'
     
-    # Get last 4 rows of w for CBC IV
-    s = np.shape(key)[0] - 4
-    r = 0
-    iv = np.zeros((4,4), dtype=np.uint8)
-    for i in range(s, s+4):
-        for j in range(4):
-            iv[r,j] = key[i,j]
-        r += 1
-
     # Open input file for reading
     infile = open(fname, 'r')
 
@@ -413,6 +420,13 @@ def cbcdecr(fname: str, key: np.ndarray):
     # get a numpy byte array
     barr = np.fromfile(fname, dtype=np.uint8)
     infile.close()
+    
+    # Split barr[] to get IV and byte array
+    splits = np.split(barr, [16, fsz+1]) 
+    iv = splits[0].reshape(4, 4)
+    barr = splits[1]
+    # Adjust fsz
+    fsz = fsz - 16
 
     try:
         with open(outfile, 'w+b') as of:
