@@ -40,7 +40,11 @@ which will write the file filename.dec.
 
 __STATUS__  
 
-This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is calculated by the KeyExpansion algorithm as one extra block in the key schedule. The key is an SHA256 hash of the passphrase providing a 32byte/256bit key.  
+This version is fully functional and produces FIPS 197 compliant output. It uses CBC mode  block-chaining. The initialization vector is randomly chosen by first obtaining a 64Byte/512bit random sequence. This random number is then digested with SHA256 resulting in 32bytes. The first 16bytes are used as the IV.  
+
+The purpose of hashing the 64Bytes of randomness is that software produced randomness is 'pseudorandom' and contains mathematical structure that can tell an attacker something predictable about your generator. Hashing the random sequence 'smoothes out' any structure thereby increasing security. We say that the hash has a higher entropy than the pseudorandom number sequence.  
+
+The key is an SHA256 hash of the passphrase providing a 32byte/256bit key. Not only does this provide us with a fixed-length key--32Bytes/256bits--but it also, again, smoothes out the (very) low-entropy passphrase and gives us a realatively high-entropy key. The increased entropy helps improve the security of the encryption key.  
 
 This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
 Standard, even using the exact function names from the standard:  
