@@ -426,9 +426,6 @@ def cbcdecr(fname: str, key: np.ndarray):
     # Adjust fsz
     fsz = fsz - 16
 
-    print(iv)
-    print(barr)
-
     try:
         with open(outfile, 'w+b') as of:
             ## Do CBC mode decr ##
