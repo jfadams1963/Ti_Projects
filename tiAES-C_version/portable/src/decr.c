@@ -121,13 +121,11 @@ void cbcdec() {
     fseek(in, 0, SEEK_SET);
 
     //Get IV block from the first 16 bytes of in, and fill the temp block
-    s = 60;
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
              iv[r][c] = fgetc(in);
              tb[r][c] = 0;
         }
-        s++;
     }
 
     // Do decryption reading from byte array and write
