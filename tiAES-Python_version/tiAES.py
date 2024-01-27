@@ -250,10 +250,8 @@ def Cipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
     Encrypts one block with AES
     Calculates number of rounds, nr, by dividing the
     number of rows in the key schedule, w, by 4.
-    Notice that we subtract 4 from the row count to 
-    account for the extra block used for the CBC IV.
     """
-    nr = (np.shape(w)[0]-4)//4 - 1
+    nr = (np.shape(w)[0])//4 - 1
 
     # Round 0 whitening
     s = AddRoundKey(st, w, 0)
@@ -279,7 +277,7 @@ def InvCipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
     Decrypts one block with AES
     See above note on number of rounds.
     """
-    nr = (np.shape(w)[0]-4)//4 - 1
+    nr = (np.shape(w)[0])//4 - 1
 
     # Round nr
     s = AddRoundKey(st, w, nr)
@@ -370,7 +368,7 @@ def cbcencr(fname: str, key: np.ndarray):
             # Write the IV to the first 16 bytes of the outfile
             of.write(bytearray(iv.flatten()))
 
-            # The mark 'i' track our position in the padded byte array
+            # The mark 'i' tracks our position in the padded byte array
             i = 0
             while i < fsz:
                 # Get next 16 bytes from bpd
@@ -427,6 +425,9 @@ def cbcdecr(fname: str, key: np.ndarray):
     barr = splits[1]
     # Adjust fsz
     fsz = fsz - 16
+
+    print(iv)
+    print(barr)
 
     try:
         with open(outfile, 'w+b') as of:
