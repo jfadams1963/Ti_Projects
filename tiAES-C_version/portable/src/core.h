@@ -24,6 +24,6 @@ typedef unsigned char word[4];
 block st,tb,ns,iv; //state blocks
 unsigned int nk = 8;
 unsigned int nr = 14;
-unsigned char w[64][4];
+unsigned char w[60][4];
 FILE *in,*out;
 

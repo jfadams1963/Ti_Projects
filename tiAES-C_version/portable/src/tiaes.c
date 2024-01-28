@@ -15,7 +15,7 @@ Usage: tiaes [e,d] <infile> <outfile>
 #endif
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     int i,sz;
 
     //arg checks
