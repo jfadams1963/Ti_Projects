@@ -46,9 +46,7 @@ The purpose of hashing the 64Bytes of randomness is that software produced rando
 
 The key is an SHA256 hash of the passphrase providing a 32byte/256bit key. Not only does this provide us with a fixed-length key--32Bytes/256bits--but it also, again, smoothes out the (very) low-entropy passphrase and gives us a realatively high-entropy key. The increased entropy helps improve the security of the encryption key.  
 
-This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
-Standard, even using the exact function names from the standard:  
-https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf  
+The KeyExpanson and Cypher routines produce FIPS-197 compliant output as verified with a block-by-block comparison to the "APPENDIX A - KEY EXPANSION EXAMPLES", "APPENDIX B – CIPHER EXAMPLE", and "Appendix C – Example Vectors" in the FIPS 197 documentation: https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf  
 
 While it works, we cannot make any claims as to how secure the coding is nor is it very fast on large files. Do not use this code for anything other that personal education and enjoyment.  
 
