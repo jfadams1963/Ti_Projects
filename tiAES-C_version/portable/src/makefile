@@ -5,9 +5,9 @@ RM      = rm -f
 UNAME  := $(shell uname)
 
 ifeq ($(UNAME),FreeBSD)
-	CFLAGS += -D BSD
+	CFLAGS += -DBSD
 else ifeq ($(UNAME),Linux)
-	CFLAGS += -D LINUX
+	CFLAGS += -DLINUX
 endif
 
 default: tiaes
