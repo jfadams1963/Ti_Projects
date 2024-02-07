@@ -8,7 +8,14 @@ Usage: tiaes [e,d] <infile> <outfile>
 
 #include <unistd.h>
 #include <string.h>
-#include <readpassphrase.h>
+
+#ifdef BSD
+    #include <readpassphrase.h>
+#endif
+
+#ifdef LINUX
+    #include <bsd/readpassphrase.h>
+#endif
 
 #include "core.h"
 

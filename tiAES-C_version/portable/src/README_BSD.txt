@@ -1,0 +1,1 @@
+On *BSD use GNUmake.
