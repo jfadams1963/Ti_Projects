@@ -8,6 +8,7 @@ ifeq ($(UNAME),FreeBSD)
 	CFLAGS += -DBSD
 else ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
+	LDFLAGS += -l:libbsd.a
 endif
 
 default: tiaes
