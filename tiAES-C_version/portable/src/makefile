@@ -13,6 +13,7 @@ endif
 default: tiaes
 
 tiaes:
+	@echo $(UNAME)
 	$(CC) $(CFLAGS) -o tiaes tiaes.c cryputils.c encr.c decr.c keyutils.c sha256.c $(LDFLAGS)
 clean:
 	$(RM) tiaes
