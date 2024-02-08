@@ -135,11 +135,11 @@ printf("In cbcdec()\n");
     // Use 'i' to index byte array
     i = 0;
     while (i < bsz) {
-    printf("Block # %d\n", i);
         // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 st[r][c] =  fgetc(in);
+
             }
         }
         // Copy state to temp block
@@ -174,17 +174,23 @@ printf("In cbcdec()\n");
     memset(st, 0, 16*sizeof(st[0][0]));
 
     // Get the padding value to truncate byte array
+    printf("Get padding size\n");
     pd = barr[bsz-1];
     sz = bsz - pd;
+    printf("Padding size is %d\n", pd);
  
     // Write the array to out file
-    for (i=0; i<sz; i++) {
-        fputc(barr[i], out);
+    printf("Writing byte array to out file\n");
+    for (int b=0; b<sz; b++) {
+        fputc(barr[b], out);
     }
+    printf("Closing out file\n");
     fclose(out);
 
     // Zero out byte array
+    printf("Zeroing out byte array\n");
     memset(barr, 0, bsz*sizeof(barr[0]));
+    printf("Freeing memory location\n");
     free(barr);
 }//end cbcdec()
 
