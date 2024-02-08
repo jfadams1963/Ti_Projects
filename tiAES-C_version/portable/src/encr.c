@@ -171,6 +171,16 @@ void cbcenc() {
         // Copy state to next IV
         cpyst_iv();
         // Write bytes to outfile by _column_ !
+        if (out == NULL) {
+            printf("out file not open for writing!\n");
+            // Zero out keymaterial, state and byte array
+            memset(w, 0, 64*4*sizeof(w[0][0]));
+            memset(iv, 0, 16*sizeof(iv[0][0]));
+            memset(ns, 0, 16*sizeof(ns[0][0]));
+            memset(st, 0, 16*sizeof(st[0][0]));
+            memset(barr, 0, bsz*sizeof(barr[0]));
+            exit(-1);
+        }
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
                 ch = st[r][c];
@@ -179,6 +189,7 @@ void cbcenc() {
         }
     }
     fclose(out);
+
     // Zero out keymaterial, state and byte array
     memset(w, 0, 64*4*sizeof(w[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
