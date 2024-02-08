@@ -48,15 +48,19 @@ int main(int argc, char* argv[]) {
     uchar* key =  SHA256(pwd);
 
     // Zero-out and deallocate pwd memory location
+    printf("Zero out pwd memory\n");
     memset(pwd, 0, sizeof(pwd)*sizeof(pwd[0]));
     free(pwd);
 
     // Do key expansion
+    printf("Do key expansion\n");
     ke(key);
 
     // Zero-out and deallocate key memory location.
+    printf("Zero out key memory\n");
     memset(key, 0, 32*sizeof(key[0]));
     free(key);
+    printf("Memory freed\n");
 
     // Open the file handles first.
     // We close them in cbcdec() and cbcenc()
@@ -65,8 +69,11 @@ int main(int argc, char* argv[]) {
         out = fopen(argv[3],"wb");
         cbcenc();
     } else if (*argv[1] == 'd') {;
+	printf("Open in file\n");
         in = fopen(argv[2],"rb");
+	printf("Open out file\n");
         out = fopen(argv[3],"wb");
+	printf("Call cbcdec()\n");
         cbcdec();
     } else {
         // Zero out key schedule

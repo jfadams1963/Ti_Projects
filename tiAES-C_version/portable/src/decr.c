@@ -111,7 +111,7 @@ void decr() {
 
 /* Implement CBC mode */
 void cbcdec() {
-
+printf("In cbcdec()\n");
     int i,r,c,s,b,bsz,sz;
     uchar ch,pd;
 
@@ -135,6 +135,7 @@ void cbcdec() {
     // Use 'i' to index byte array
     i = 0;
     while (i < bsz) {
+    printf("Block # %d\n", i);
         // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
@@ -161,9 +162,11 @@ void cbcdec() {
             }
         }
     }        
+    printf("Closing in file\n");
     fclose(in);
 
     // Zero out keymaterial and state 
+    printf("Zeroing out memory\n");
     memset(w, 0, 64*4*sizeof(w[0][0]));
     memset(tb, 0, 16*sizeof(tb[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
