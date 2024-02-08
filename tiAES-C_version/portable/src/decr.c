@@ -136,6 +136,7 @@ printf("In cbcdec()\n");
     i = 0;
     while (i < bsz) {
     printf("Block # %d\n", i/16);
+
         // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
