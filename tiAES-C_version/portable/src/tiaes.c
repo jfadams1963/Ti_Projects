@@ -68,18 +68,23 @@ int main(int argc, char* argv[]) {
         in = fopen(argv[2],"rb");
         out = fopen(argv[3],"wb");
         cbcenc();
+
     } else if (*argv[1] == 'd') {;
-	printf("Open in file\n");
         in = fopen(argv[2],"rb");
-	printf("Open out file\n");
+	if (in == NULL) {
+	    printf("Could not open in file for reading!");
+	    return -1;
+        }
+
         out = fopen(argv[3],"wb");
 	if (out == NULL) {
 	    printf("Could not open out file for writing!");
-	    exit(-1);
+	    return -1;
 	} else {
 	    printf("Call cbcdec()\n");
             cbcdec();
 	}
+
     } else {
         // Zero out key schedule
         memset(w, 0, 64*4*sizeof(w[0][0]));
