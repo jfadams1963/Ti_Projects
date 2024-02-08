@@ -135,6 +135,10 @@ printf("In cbcdec()\n");
     // Use 'i' to index byte array
     i = 0;
     while (i < bsz) {
+<<<<<<< HEAD
+=======
+    printf("Block # %d\n", i/16);
+>>>>>>> 888e39213f27a6c3c915c840276dbd44e9e8d28d
         // Read bytes into state by _column_ !
         for (c=0; c<4; c++) {
             for (r=0; r<4; r++) {
