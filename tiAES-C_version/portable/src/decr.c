@@ -111,7 +111,6 @@ void decr() {
 
 /* Implement CBC mode */
 void cbcdec() {
-printf("In cbcdec()\n");
     int i,r,c,s,b,bsz,sz;
     uchar ch,pd;
 
@@ -162,11 +161,9 @@ printf("In cbcdec()\n");
             }
         }
     }        
-    printf("Closing in file\n");
     fclose(in);
 
     // Zero out keymaterial and state 
-    printf("Zeroing out memory\n");
     memset(w, 0, 64*4*sizeof(w[0][0]));
     memset(tb, 0, 16*sizeof(tb[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
@@ -174,14 +171,10 @@ printf("In cbcdec()\n");
     memset(st, 0, 16*sizeof(st[0][0]));
 
     // Get the padding value to truncate byte array
-    printf("Get padding size\n");
     pd = barr[bsz-1];
     sz = bsz - pd;
-    printf("Padding size is %d\n", pd);
-    printf("Size of barr[] %d\n", sizeof(barr));
  
     // Write the array to out file
-    printf("Writing byte array to out file\n");
     if (out == NULL) {
 	printf("out file not open for writing!\n");
 	exit(-1);
@@ -189,13 +182,10 @@ printf("In cbcdec()\n");
     for (int b=0; b<sz; b++) {
         fputc(barr[b], out);
     }
-    printf("Closing out file\n");
     fclose(out);
 
     // Zero out byte array
-    printf("Zeroing out byte array\n");
     memset(barr, 0, bsz*sizeof(barr[0]));
-    printf("Freeing memory location\n");
     free(barr);
 }//end cbcdec()
 
