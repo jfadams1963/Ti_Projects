@@ -60,16 +60,21 @@ int main(int argc, char* argv[]) {
 
     // Open the file handles first.
     // We close them in cbcdec() and cbcenc()
+    // Refactor/consolodate this section!
     if (*argv[1] == 'e') {
         in = fopen(argv[2],"rb");
-        if (in == NULL) {
+        if (!in) {
             printf("Could not open in file for reading!");
+            // Zero out key schedule
+            memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
         }
 
         out = fopen(argv[3],"wb");
-        if (out == NULL) {
+        if (!out) {
             printf("Could not open out file for writing!");
+            // Zero out key schedule
+            memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
         } else {
             cbcenc();
@@ -79,12 +84,16 @@ int main(int argc, char* argv[]) {
         in = fopen(argv[2],"rb");
         if (!in) {
             printf("Could not open in file for reading!");
+            // Zero out key schedule
+            memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
         }
 
         out = fopen(argv[3],"wb");
         if (!out) {
             printf("Could not open out file for writing!");
+            // Zero out key schedule
+            memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
         } else {
             cbcdec();

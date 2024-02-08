@@ -171,7 +171,7 @@ void cbcenc() {
         // Copy state to next IV
         cpyst_iv();
         // Write bytes to outfile by _column_ !
-        if (out == NULL) {
+        if (!out) {
             printf("out file not open for writing!\n");
             // Zero out keymaterial, state and byte array
             memset(w, 0, 64*4*sizeof(w[0][0]));
