@@ -176,8 +176,8 @@ void cbcdec() {
  
     // Write the array to out file
     if (out == NULL) {
-	printf("out file not open for writing!\n");
-	exit(-1);
+        printf("out file not open for writing!\n");
+        exit(-1);
     }
     for (int b=0; b<sz; b++) {
         fputc(barr[b], out);
