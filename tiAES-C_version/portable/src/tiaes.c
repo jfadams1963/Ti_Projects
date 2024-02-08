@@ -6,7 +6,6 @@
  * Usage: tiaes [e,d] <infile> <outfile>
  */
 
-#include <unistd.h>
 #include <err.h>
 
 #ifdef BSD
