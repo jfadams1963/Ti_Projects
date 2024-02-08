@@ -6,10 +6,9 @@
  * Usage: tiaes [e,d] <infile> <outfile>
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <err.h>
 
 #ifdef BSD
     #include <readpassphrase.h>
@@ -34,14 +33,14 @@ int main(int argc, char* argv[]) {
     //arg checks
     if (argc != 4) {
         printf("Usage: tiaes [e,d] <infile> <outfile>\n");
-        exit(1);
+        return -1;
     }
 
     // Allocate memory for passphrase
     char* pwd = malloc(1024);
     if (pwd == NULL) {
         perror("Memory allocation error");
-        exit(1);
+        return -1;
     }
 
     // Read passphrase
@@ -71,7 +70,7 @@ int main(int argc, char* argv[]) {
     if (*argv[1] == 'e') {
         in = fopen(argv[2],"rb");
         if (!in) {
-            printf("Could not open input file for reading!");
+            perror("Could not open input file for reading!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -79,7 +78,7 @@ int main(int argc, char* argv[]) {
 
         out = fopen(argv[3],"wb");
         if (!out) {
-            printf("Could not open output file for writing!");
+            perror("Could not open output file for writing!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -91,7 +90,7 @@ int main(int argc, char* argv[]) {
     } else if (*argv[1] == 'd') {;
         in = fopen(argv[2],"rb");
         if (!in) {
-            printf("Could not open input file for reading!");
+            perror("Could not open input file for reading!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -99,7 +98,7 @@ int main(int argc, char* argv[]) {
 
         out = fopen(argv[3],"wb");
         if (!out) {
-            printf("Could not open output file for writing!");
+            perror("Could not open output file for writing!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
