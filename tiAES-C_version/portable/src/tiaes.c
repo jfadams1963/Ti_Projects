@@ -73,8 +73,13 @@ int main(int argc, char* argv[]) {
         in = fopen(argv[2],"rb");
 	printf("Open out file\n");
         out = fopen(argv[3],"wb");
-	printf("Call cbcdec()\n");
-        cbcdec();
+	if (out == NULL) {
+	    printf("Could not open out file for writing!");
+	    exit(-1);
+	} else {
+	    printf("Call cbcdec()\n");
+            cbcdec();
+	}
     } else {
         // Zero out key schedule
         memset(w, 0, 64*4*sizeof(w[0][0]));
