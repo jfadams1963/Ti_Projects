@@ -178,9 +178,14 @@ printf("In cbcdec()\n");
     pd = barr[bsz-1];
     sz = bsz - pd;
     printf("Padding size is %d\n", pd);
+    printf("Size of barr[] %d\n", sizeof(barr));
  
     // Write the array to out file
     printf("Writing byte array to out file\n");
+    if (out == NULL) {
+	printf("out file not open for writing!\n");
+	exit(-1);
+    }
     for (int b=0; b<sz; b++) {
         fputc(barr[b], out);
     }
