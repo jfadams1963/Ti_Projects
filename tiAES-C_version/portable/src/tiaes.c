@@ -3,9 +3,11 @@
 //Released under the 2-clause BSD license.
 
 /*
-Usage: tiaes [e,d] <infile> <outfile>
-*/
+ * Usage: tiaes [e,d] <infile> <outfile>
+ */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 
@@ -26,6 +28,7 @@ Usage: tiaes [e,d] <infile> <outfile>
 
 
 int main(int argc, char* argv[]) {
+
     int i,sz;
 
     //arg checks
@@ -34,12 +37,14 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    // Allocate memory for passphrase
     char* pwd = malloc(1024);
     if (pwd == NULL) {
         perror("Memory allocation error");
         exit(1);
     }
 
+    // Read passphrase
     readpassphrase("Passphrase: ", pwd, sizeof(pwd), 0);
 
     // Use the 256-bit hash of the passphrase as the key.
@@ -58,13 +63,15 @@ int main(int argc, char* argv[]) {
     memset(key, 0, 32*sizeof(key[0]));
     free(key);
 
-    // Open the file handles first.
-    // We close them in cbcdec() and cbcenc()
-    // Refactor/consolodate this section!
+    /* 
+     * Open the file handles first.
+     * We close them in cbcdec() and cbcenc()
+     */
+    // Open files for encryption, call cbcenc()
     if (*argv[1] == 'e') {
         in = fopen(argv[2],"rb");
         if (!in) {
-            printf("Could not open in file for reading!");
+            printf("Could not open input file for reading!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -72,7 +79,7 @@ int main(int argc, char* argv[]) {
 
         out = fopen(argv[3],"wb");
         if (!out) {
-            printf("Could not open out file for writing!");
+            printf("Could not open output file for writing!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -80,10 +87,11 @@ int main(int argc, char* argv[]) {
             cbcenc();
         }
 
+    // Open files for decryption, call cbcdec()
     } else if (*argv[1] == 'd') {;
         in = fopen(argv[2],"rb");
         if (!in) {
-            printf("Could not open in file for reading!");
+            printf("Could not open input file for reading!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;
@@ -91,7 +99,7 @@ int main(int argc, char* argv[]) {
 
         out = fopen(argv[3],"wb");
         if (!out) {
-            printf("Could not open out file for writing!");
+            printf("Could not open output file for writing!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;

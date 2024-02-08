@@ -1,20 +1,22 @@
 CC      = cc
-CFLAGS  = -g -w -Wall -Wextra
+CFLAGS  = -w -Wall -Wextra
 LDFLAGS = -Wl,--allow-multiple-definition -lssl -lcrypto 
 RM      = rm -f
 UNAME  := $(shell uname)
 
 ifeq ($(UNAME),FreeBSD)
-	CFLAGS += -DBSD
+	CFLAGS += -D BSD
 else ifeq ($(UNAME),Linux)
-	CFLAGS += -DLINUX
-	LDFLAGS += -l:libbsd.a
+	CFLAGS += -D LINUX
 endif
 
 default: tiaes
 
 tiaes:
-	@echo $(UNAME)
 	$(CC) $(CFLAGS) -o tiaes tiaes.c cryputils.c encr.c decr.c keyutils.c sha256.c $(LDFLAGS)
+
+debug:
+	$(CC) $(CFLAGS) -g -o tiaes tiaes.c cryputils.c encr.c decr.c keyutils.c sha256.c $(LDFLAGS)
+
 clean:
 	$(RM) tiaes
