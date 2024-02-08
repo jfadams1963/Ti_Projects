@@ -7,7 +7,6 @@
  */
 
 #include <unistd.h>
-#include <string.h>
 #include <err.h>
 
 #ifdef BSD
@@ -27,8 +26,6 @@
 
 
 int main(int argc, char* argv[]) {
-
-    int i,sz;
 
     //arg checks
     if (argc != 4) {
@@ -98,7 +95,7 @@ int main(int argc, char* argv[]) {
 
         out = fopen(argv[3],"wb");
         if (!out) {
-            perror("Could not open output file for writing!");
+            perror("Could not open output file for writing in main!");
             // Zero out key schedule
             memset(w, 0, 64*4*sizeof(w[0][0]));
             return -1;

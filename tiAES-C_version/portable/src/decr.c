@@ -176,7 +176,7 @@ void cbcdec() {
  
     // Write the array to out file
     if (!out) {
-        printf("out file not open for writing!\n");
+        printf("out file not open for writing in cbcdec()!\n");
         // Zero out byte array
         memset(barr, 0, bsz*sizeof(barr[0]));
         exit(-1);

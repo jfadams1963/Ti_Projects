@@ -25,5 +25,6 @@ block st,tb,ns,iv; //state blocks
 unsigned int nk = 8;
 unsigned int nr = 14;
 unsigned char w[60][4];
+int infd, outfd;
 FILE *in,*out;
 
