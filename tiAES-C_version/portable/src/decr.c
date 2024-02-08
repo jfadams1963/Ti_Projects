@@ -175,7 +175,7 @@ void cbcdec() {
     sz = bsz - pd;
  
     // Write the array to out file
-    if (out == NULL) {
+    if (!out) {
         printf("out file not open for writing!\n");
         // Zero out byte array
         memset(barr, 0, bsz*sizeof(barr[0]));

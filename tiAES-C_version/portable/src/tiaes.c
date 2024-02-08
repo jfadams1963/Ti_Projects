@@ -77,13 +77,13 @@ int main(int argc, char* argv[]) {
 
     } else if (*argv[1] == 'd') {;
         in = fopen(argv[2],"rb");
-        if (in == NULL) {
+        if (!in) {
             printf("Could not open in file for reading!");
             return -1;
         }
 
         out = fopen(argv[3],"wb");
-        if (out == NULL) {
+        if (!out) {
             printf("Could not open out file for writing!");
             return -1;
         } else {
