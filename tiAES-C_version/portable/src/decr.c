@@ -110,7 +110,7 @@ void decr() {
 
 
 /* Implement CBC mode */
-void cbcdec() {
+void cbcdec(char* f) {
     int i,r,c,s,b,bsz,sz;
     uchar ch,pd;
 
@@ -174,6 +174,8 @@ void cbcdec() {
     pd = barr[bsz-1];
     sz = bsz - pd;
  
+    // Open outfile for write
+    out = fopen(f, "wb");
     // Write the array to out file
     if (!out) {
         printf("out file not open for writing in cbcdec()!\n");

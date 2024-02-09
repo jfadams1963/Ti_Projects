@@ -7,7 +7,7 @@ extern void cpyns_st(void);
 extern void cpytb_iv(void);
 extern void cpyst_tb(void);
 extern void cpyst_iv(void);
-extern void cbcdec(void);
+extern void cbcdec(char*);
 extern void cbcenc(void);
 extern void gen_rand(unsigned char*);
 extern void get_iv(void);

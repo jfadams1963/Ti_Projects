@@ -6,8 +6,6 @@
  * Usage: tiaes [e,d] <infile> <outfile>
  */
 
-#include <err.h>
-
 #ifdef BSD
     #include <readpassphrase.h>
 #endif
@@ -92,6 +90,8 @@ int main(int argc, char* argv[]) {
             return -1;
         }
 
+        cbcdec(argv[3]);
+        /*
         out = fopen(argv[3],"wb");
         if (!out) {
             perror("Could not open output file for writing in main!");
@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
         } else {
             cbcdec();
         }
+        */
 
     } else {
         // Zero out key schedule
