@@ -1,3 +1,3 @@
 #!/bin/sh
-
-cat .bash-add >> /home/gitpod/.bashrc
+cp /workspace/Ti_Projects/.bashrc /home/gitpod/
+#cat .bash-add >> /home/gitpod/.bashrc
