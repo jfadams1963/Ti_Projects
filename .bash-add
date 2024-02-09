@@ -1,0 +1,10 @@
+# Personal prefs
+alias chkprts='sudo lsof -nP -iTCP -sTCP:LISTEN'
+alias ll='ls -alF --color=auto'
+alias l='ls -lF --color=auto'
+alias c='clear'
+alias psx='ps -aux | grep -v grep'
+export EDITOR='vim'
+export SUDO_EDITOR='vim'
+export VISUAL='vim'
+unset HISTFILE
