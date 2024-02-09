@@ -2,4 +2,4 @@ image:
   file: .gitpod.Dockerfile
 tasks:
 - name: Setup environment
-  command: sh setup.sh
+  command: sudo sh setup.sh
