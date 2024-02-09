@@ -2,7 +2,7 @@
 #FROM gitpod/workspace-base:2022-05-08-14-31-53
 #FROM gitpod/workspace-mysql:2023-11-04-12-07-48
 #FROM gitpod/workspace-gitpod-dev:latest
-FROM debian:latest
+FROM debian:trixie
 
 # Install:
 # - git (and git-lfs), for git operations (to e.g. push your work).
