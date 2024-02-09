@@ -1,5 +1,4 @@
-image:
-  file: .gitpod.Dockerfile
+image: node:trixie
 tasks:
 - name: Setup environment
-  command: sh cp /workspace/Ti-Projects/.bashrc ~/
+  command: sh cp /workspace/Ti-Projects/.bashrc ~/ ; source ~/.bashrc
