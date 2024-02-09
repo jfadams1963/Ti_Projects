@@ -121,5 +121,6 @@ alias c='clear'
 alias psx='ps -aux | grep -v grep'
 export EDITOR='vim'
 export SUDO_EDITOR='vim'
+export GIT_EDITOR='vim'
 export VISUAL='vim'
 unset HISTFILE
