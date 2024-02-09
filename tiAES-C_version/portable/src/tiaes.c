@@ -57,51 +57,32 @@ int main(int argc, char* argv[]) {
     free(key);
 
     /* 
-     * Open the file handles first.
-     * We close them in cbcdec() and cbcenc()
+     * Open the input file first.
+     * We close in cbcdec() and cbcenc()
      */
-    // Open files for encryption, call cbcenc()
+    // Open input file for reading, call cbcenc()
     if (*argv[1] == 'e') {
         in = fopen(argv[2],"rb");
         if (!in) {
             perror("Could not open input file for reading!");
             // Zero out key schedule
-            memset(w, 0, 64*4*sizeof(w[0][0]));
+            memset(w, 0, 60*4*sizeof(w[0][0]));
             return -1;
         }
 
-        out = fopen(argv[3],"wb");
-        if (!out) {
-            perror("Could not open output file for writing!");
-            // Zero out key schedule
-            memset(w, 0, 64*4*sizeof(w[0][0]));
-            return -1;
-        } else {
-            cbcenc();
-        }
+        cbcenc(argv[3]);
 
-    // Open files for decryption, call cbcdec()
+    // Open input files for reading, call cbcdec()
     } else if (*argv[1] == 'd') {;
         in = fopen(argv[2],"rb");
         if (!in) {
             perror("Could not open input file for reading!");
             // Zero out key schedule
-            memset(w, 0, 64*4*sizeof(w[0][0]));
+            memset(w, 0, 60*4*sizeof(w[0][0]));
             return -1;
         }
 
         cbcdec(argv[3]);
-        /*
-        out = fopen(argv[3],"wb");
-        if (!out) {
-            perror("Could not open output file for writing in main!");
-            // Zero out key schedule
-            memset(w, 0, 64*4*sizeof(w[0][0]));
-            return -1;
-        } else {
-            cbcdec();
-        }
-        */
 
     } else {
         // Zero out key schedule

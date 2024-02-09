@@ -8,7 +8,7 @@ extern void cpytb_iv(void);
 extern void cpyst_tb(void);
 extern void cpyst_iv(void);
 extern void cbcdec(char*);
-extern void cbcenc(void);
+extern void cbcenc(char*);
 extern void gen_rand(unsigned char*);
 extern void get_iv(void);
 extern unsigned char* SHA256(char*);

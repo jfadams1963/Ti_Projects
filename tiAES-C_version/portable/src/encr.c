@@ -110,7 +110,7 @@ void encr() {
 
 
 /* Implement CBC mode */
-void cbcenc() {
+void cbcenc(char* of) {
     int i,r,c,s,b,sz,bsz;
     uchar ch,pd;
 
@@ -140,8 +140,18 @@ void cbcenc() {
     }
     fclose(in);
 
+    // Get Initialization Vector
     get_iv();
-    // Write the IV to the first 16 bytes of out. 
+
+    // Open the outfile and write
+    // the IV to the first 16 bytes of out. 
+    out = fopen(of, "wb");
+    if (!out) {
+        perror("out file not open for writing in cbcenc() 1!\n");
+        // Zero out byte array
+        memset(barr, 0, bsz*sizeof(barr[0]));
+        exit(-1); 
+    }
     for (r=0; r<4; r++) {
         for (c=0; c<4; c++) {
             ch = iv[r][c];
@@ -172,7 +182,7 @@ void cbcenc() {
         cpyst_iv();
         // Write bytes to outfile by _column_ !
         if (!out) {
-            printf("out file not open for writing!\n");
+            perror("out file not open for writing in cbcenc() 2!\n");
             // Zero out keymaterial, state and byte array
             memset(w, 0, 64*4*sizeof(w[0][0]));
             memset(iv, 0, 16*sizeof(iv[0][0]));
