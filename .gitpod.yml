@@ -2,4 +2,4 @@ image:
   file: .gitpod.Dockerfile
 tasks:
 - name: Setup environment
-  command: sh cp /workspace/Ti-Projects/.bashrc $HOME/ ; source $HOME/.bashrc
+  command: sh setup.sh
