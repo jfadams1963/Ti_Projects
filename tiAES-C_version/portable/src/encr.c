@@ -110,10 +110,20 @@ void encr() {
 
 
 /* Implement CBC mode */
-void cbcenc(char* of) {
+void cbcenc(char* inf, char* of) {
     int i,r,c,s,b,sz,bsz;
     uchar ch,pd;
+    FILE *in, *out;
 
+    // Open infile for reading
+    in = fopen(inf, "r");
+    if (!in) {
+        perror("Could not open input file for reading!");
+        // Zero out key schedule 
+        memset(w, 0, 60*4*sizeof(w[0][0]));
+        exit(-1);
+    }
+    
     // Size of input file 
     fseek(in, 0, SEEK_END);
     sz = ftell(in);

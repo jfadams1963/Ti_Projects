@@ -56,37 +56,16 @@ int main(int argc, char* argv[]) {
     memset(key, 0, 32*sizeof(key[0]));
     free(key);
 
-    /* 
-     * Open the input file first.
-     * We close in cbcdec() and cbcenc()
-     */
-    // Open input file for reading, call cbcenc()
+    // Do encrypt/decrypt
     if (*argv[1] == 'e') {
-        in = fopen(argv[2],"rb");
-        if (!in) {
-            perror("Could not open input file for reading!");
-            // Zero out key schedule
-            memset(w, 0, 60*4*sizeof(w[0][0]));
-            return -1;
-        }
+        cbcenc(argv[2], argv[3]);
 
-        cbcenc(argv[3]);
-
-    // Open input files for reading, call cbcdec()
     } else if (*argv[1] == 'd') {;
-        in = fopen(argv[2],"rb");
-        if (!in) {
-            perror("Could not open input file for reading!");
-            // Zero out key schedule
-            memset(w, 0, 60*4*sizeof(w[0][0]));
-            return -1;
-        }
-
-        cbcdec(argv[3]);
+        cbcdec(argv[2], argv[3]);
 
     } else {
         // Zero out key schedule
-        memset(w, 0, 60*4*sizeof(w[0][0]));
+        memset(w, 0, 64*4*sizeof(w[0][0]));
         printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
     }
 
