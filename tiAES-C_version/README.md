@@ -21,7 +21,7 @@ Recomended reading: [Cryptography Engineering](https://www.schneier.com/books/cr
 
 __Build Requirements__  
 
-The portable version compiles cleanly with Clang 16.0.6 on FreeBSD 14, and GCC 11.4.0 on some sort of Linux.  
+The portable version compiles cleanly with Clang 16.0.6 on FreeBSD 14, Clang 13.0 on OpenBSD 7.4, and GCC 11.4.0 on some sort of Linux.  
 
 The FreeBSD base system has all required libraries, but you may want to intall:  
 + gmake  
