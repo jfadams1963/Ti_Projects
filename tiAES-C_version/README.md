@@ -21,10 +21,16 @@ The portable version compiles cleanly with Clang 16.0.6 on FreeBSD 14, and GCC 1
 
 __Build Requirements__  
 
-The FreeBSD base system has all required libraries, but you will need to intall:  
+The FreeBSD base system has all required libraries, but you may want to intall:  
 + gmake  
 
 `# pkg install gmake` as root or with `sudo`.  
+
+To compile, run:
+`$ gmake`  
+
+Or you can use BSD make and run:  
+`$ make -f makefile.bsd`  
 
 On Debian/Ubuntu, install these packages:  
 + build-essential 
@@ -34,4 +40,10 @@ On Debian/Ubuntu, install these packages:
 
 `# apt install build-essential libssl-dev libbsd0 libbsd-dev` as root or with `sudo`.  
 
+To compile, run:  
+`$ make`  
+
 If you are on Ubuntu (or what ever) with passwordless, unlimited sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
+
+Shameless promo:  
+Purchase and read Michael W. Lucas' book (Sudo Mastery)[https://mwl.io/nonfiction/tools#sudo2].
