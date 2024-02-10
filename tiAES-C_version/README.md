@@ -1,7 +1,7 @@
 # tiAES-C
 AES for the TI-89/90+ in C  
 
-The _portable_ version compiles and works without error on FreeBSD and Linux. The next step is for someone to port it to the TI platform with TIGCC.  
+The _portable_ version compiles and runs without error on FreeBSD and Linux. The next step is for someone to port it to the TI platform with TIGCC.  
 
 It is a very simple (simple minded?), straight forward implementation of AES using CBC mode (Cipher Block Chaining) with a random IV (Initialization Vector), and produces FIPS compliant output. It is not suitable for real world usage, but only serves as an educational excercise.  
 
