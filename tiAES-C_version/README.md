@@ -26,7 +26,7 @@ The FreeBSD base system has all required libraries, but you may want to intall:
 
 `# pkg install gmake` as root or with `sudo`.  
 
-To compile, run:
+To compile, run:  
 `$ gmake`  
 
 Or you can use BSD make and run:  
@@ -46,4 +46,4 @@ To compile, run:
 If you are on Ubuntu (or what ever) with passwordless, unlimited sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
 
 Shameless promo:  
-Purchase and read Michael W. Lucas' book (Sudo Mastery)[https://mwl.io/nonfiction/tools#sudo2].
+Purchase and read Michael W. Lucas' book [Sudo Mastery](https://mwl.io/nonfiction/tools#sudo2).
