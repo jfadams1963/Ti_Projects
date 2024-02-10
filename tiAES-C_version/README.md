@@ -17,6 +17,8 @@ The key is an SHA256 hash of the passphrase providing a 32byte/256bit key. Not o
 
 The KeyExpanson and Cypher routines produce FIPS-197 compliant output as verified with a block-by-block comparison to the "APPENDIX A - KEY EXPANSION EXAMPLES", "APPENDIX B – CIPHER EXAMPLE", and "Appendix C – Example Vectors"  in the [FIPS 197 documentation](https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf)  (See tiAES-C_version/portable/src/keyutils.c and tiAES-C_version/portable/src/encr.c)  
 
+Recomended reading: [Cryptography Engineering](https://www.schneier.com/books/cryptography-engineering/), by Niels Ferguson, Bruce Schneier, and Tadayoshi Kohno.
+
 __Build Requirements__  
 
 The portable version compiles cleanly with Clang 16.0.6 on FreeBSD 14, and GCC 11.4.0 on some sort of Linux.  
