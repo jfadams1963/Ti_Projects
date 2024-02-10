@@ -34,6 +34,4 @@ On Debian/Ubuntu, install these packages:
 
 `# apt install build-essential libssl-dev libbsd0 libbsd-dev` as root.  
 
-If you are on Ubuntu with passwordless sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
-
-
+If you are on Ubuntu with passwordless, unlimited sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
