@@ -24,7 +24,7 @@ __Build Requirements__
 The FreeBSD base system has all required libraries, but you will need to intall:  
 + gmake  
 
-`# pkg install gmake`  
+`# pkg install gmake` as root.  
 
 On Debian/Ubuntu, install these packages:  
 + build-essential 
@@ -32,9 +32,8 @@ On Debian/Ubuntu, install these packages:
 + libbsd0
 + libbsd-dev  
 
-`# apt install build-essential libssl-dev libbsd0 libbsd-dev`  
+`# apt install build-essential libssl-dev libbsd0 libbsd-dev` as root.  
 
-Or if you are "forever root" on Ubuntu with no passwd `sudo`  
-`$ sudo apt install build-essential libssl-dev libbsd0 libbsd-dev`  
+If you are on Ubuntu with passwordless sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
 
 
