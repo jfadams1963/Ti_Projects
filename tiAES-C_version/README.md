@@ -47,6 +47,7 @@ To compile, run:
 
 If you are on Ubuntu (or what ever) with passwordless, unlimited sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
 
+__Using Sudo__  
   
 Quotes from Michael W. Lucas' book [Sudo Mastery, 2nd ed.](https://mwl.io/nonfiction/tools#sudo2):  
 
