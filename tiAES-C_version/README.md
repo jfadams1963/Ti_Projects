@@ -47,5 +47,15 @@ To compile, run:
 
 If you are on Ubuntu (or what ever) with passwordless, unlimited sudo, that's bad practice. Edit your `/etc/sudoers` to require your password. Please.  
 
-Shameless promo:  
-Purchase and read Michael W. Lucas' book [Sudo Mastery](https://mwl.io/nonfiction/tools#sudo2).
+  
+Quotes from Michael W. Lucas' book [Sudo Mastery, 2nd ed.](https://mwl.io/nonfiction/tools#sudo2):  
+
+```text
+  Broadly disabling sudo authentication is unwise. Yes, it's certainly convenient. Also, any intruder or application that gets a command prompt or access to your account also gains total access to all of your sudo privleges. If you're running a Linux variant that gives the first user full root access via sudo, then the rougue process will completely own your machine.  
+...  
+Disabling sudo authentication is equivalent to deliberately implementing the Windows 95 security system.
+```  
+
+As Lucas points out to anyone too young to remember: "Windows 95 had no security system."  
+(Quoted with author's permission.)  
+
