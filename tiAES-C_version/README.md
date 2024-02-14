@@ -5,7 +5,7 @@ The _portable_ version compiles and runs without error on FreeBSD, OpenBSD, and 
 
 It is a very simple (simple minded?), straight forward implementation of AES using CBC mode ([Cipher Block Chaining](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC))) with a random IV ([Initialization Vector](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Initialization_vector_(IV))), and produces FIPS compliant output. It is not suitable for real world usage, but only serves as an educational exercise.  
 
-It was originally written to take key sizes of 128bit, 192bit and 256bit. This working version is locked in at 256bits by using a SHA256 hash of the entered passphrase as the key.  
+It was originally written to take key sizes of 128bit, 192bit and 256bit. This working version is locked in at 256bits by using a SHA256 hash of the entered passphrase as the key. Additionally, the number of rounds per block is globally set to `nr=14`, and the number of 32-bit words making up the key is set to `nk=8`; 8 x 32 = 256. (See FIPS 197 Sec. 6.3)  
 
 __STATUS__  
 
