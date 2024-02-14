@@ -111,6 +111,7 @@ void decr() {
 
 /* Implement CBC mode */
 void cbcdec(char* inf, char* of) {
+
     int i,r,c,s,b,bsz,sz;
     uchar ch,pd;
     FILE *in, *out;
@@ -119,9 +120,10 @@ void cbcdec(char* inf, char* of) {
     in = fopen(inf, "r");
     if (!in) {
         perror("Could not open input file for reading!");
+        printf("Cleaning up and exiting gracefully.");
         // Zero out key schedule 
         memset(w, 0, 60*4*sizeof(w[0][0]));
-        exit(-1);
+        exit(1);
         }
 
     // Size of input file 
@@ -189,9 +191,10 @@ void cbcdec(char* inf, char* of) {
     // Write the array to out file
     if (!out) {
         perror("out file not open for writing in cbcdec()!\n");
+        printf("Cleaning up and exiting gracefully.");
         // Zero out byte array
         memset(barr, 0, bsz*sizeof(barr[0]));
-        exit(-1);
+        exit(1);
     }
     for (i=0; i<sz; i++) {
         fputc(barr[i], out);
