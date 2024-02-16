@@ -123,7 +123,7 @@ void cbcdec(char* inf, char* of) {
         printf("Cleaning up and exiting gracefully.");
         // Zero out key schedule 
         memset(w, 0, 60*4*sizeof(w[0][0]));
-        exit(1);
+        exit(0);
         }
 
     // Size of input file 
@@ -176,7 +176,7 @@ void cbcdec(char* inf, char* of) {
     fclose(in);
 
     // Zero out keymaterial and state 
-    memset(w, 0, 64*4*sizeof(w[0][0]));
+    memset(w, 0, 60*4*sizeof(w[0][0]));
     memset(tb, 0, 16*sizeof(tb[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
     memset(ns, 0, 16*sizeof(ns[0][0]));
@@ -194,7 +194,7 @@ void cbcdec(char* inf, char* of) {
         printf("Cleaning up and exiting gracefully.");
         // Zero out byte array
         memset(barr, 0, bsz*sizeof(barr[0]));
-        exit(1);
+        exit(0);
     }
     for (i=0; i<sz; i++) {
         fputc(barr[i], out);

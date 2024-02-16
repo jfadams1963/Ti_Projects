@@ -9,7 +9,7 @@
 /* AES Cipher() */
 void encr() {
 
-    int c,r,rd = 0;
+    uint c,r,rd = 0;
 
     /* AddRoundKey()  (column of state) xor (row of RoundKey) */
     //round number 0
@@ -112,7 +112,8 @@ void encr() {
 /* Implement CBC mode */
 void cbcenc(char* inf, char* of) {
 
-    int i,r,c,s,b,sz,bsz;
+    int i,r,c,b,s,bsz;
+    long sz;
     uchar ch,pd;
     FILE *in, *out;
 
@@ -123,21 +124,21 @@ void cbcenc(char* inf, char* of) {
         printf("Cleaning up and exiting gracefully.");
         // Zero out key schedule 
         memset(w, 0, 60*4*sizeof(w[0][0]));
-        exit(1);
+        exit(0);
     }
     
     // Size of input file 
-    fseek(in, 0, SEEK_END);
+    (void) fseek(in, 0, SEEK_END);
     sz = ftell(in);
-    fseek(in, 0, SEEK_SET);
+    (void) fseek(in, 0, SEEK_SET);
 
     // Get padding size, add to sz for byte array size.
     if ((sz%16) > 0) {
-        pd = (16-(sz%16));
+        pd = (uchar) (16-(sz%16));
     } else {
         pd = 16;
     }
-    bsz = (sz + pd);
+    bsz = (int) (sz + pd);
 
     // Next, read the bytes into an uchar array,
     // pad with padding bytes, close input file
@@ -198,7 +199,7 @@ void cbcenc(char* inf, char* of) {
             perror("out file not open for writing in cbcenc() 2!\n");
             printf("Cleaning up and exiting gracefully.");
             // Zero out keymaterial, state and byte array
-            memset(w, 0, 64*4*sizeof(w[0][0]));
+            memset(w, 0, 60*4*sizeof(w[0][0]));
             memset(iv, 0, 16*sizeof(iv[0][0]));
             memset(ns, 0, 16*sizeof(ns[0][0]));
             memset(st, 0, 16*sizeof(st[0][0]));
@@ -215,7 +216,7 @@ void cbcenc(char* inf, char* of) {
     fclose(out);
 
     // Zero out keymaterial, state and byte array
-    memset(w, 0, 64*4*sizeof(w[0][0]));
+    memset(w, 0, 60*4*sizeof(w[0][0]));
     memset(iv, 0, 16*sizeof(iv[0][0]));
     memset(ns, 0, 16*sizeof(ns[0][0]));
     memset(st, 0, 16*sizeof(st[0][0]));
