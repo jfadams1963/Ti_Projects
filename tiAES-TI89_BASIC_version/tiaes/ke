@@ -5,7 +5,7 @@ Func
 
 Local w,wl,tp,rcon,rw,i
 
-(c) Set w length (rows) based on nr--number of rounds.
+(c) Set w length (rows) based on nr=number of rounds.
 nb*(nr+1)->wl
 newMat(wl,4)->w
 

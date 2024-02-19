@@ -22,5 +22,6 @@ For i,1,sl,16
     st->iv
 EndFor
 
-vs&cs->out
+(c) Prepend IV to output
+ivs&cs->out
 EndPrgm

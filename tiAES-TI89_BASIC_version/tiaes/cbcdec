@@ -5,7 +5,7 @@ Prgm
 
 Local ps,i,sl,mb,tb,iv,ivs
 
-dim(cs)+32->sl
+dim(cs)->sl
 (c) empty plaintext string
 ""->ps
 
