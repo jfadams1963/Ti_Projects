@@ -3,15 +3,15 @@ Prgm
 (c) string,mat
 (c) takes a plaintext string and key schedule
  
-Local cs,i,sl,pb,cb,mb,iv,vs
+Local cs,i,sl,pb,cb,mb,iv,ivs
  
 dim(ps)+16->sl
-(c) empty cypher string
+(c) empty cipher string
 ""->cs
 
 (c) get CBC initialization vector
 set_iv()->iv
-ord_str(iv)->vs
+ord_str(iv)->ivs
 
 For i,1,sl,16
     (c) load 16 bytes of ps into state

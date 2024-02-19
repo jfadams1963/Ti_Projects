@@ -1,17 +1,17 @@
 cbcdec(cs,w)
 Prgm
 (c) string, mat
-(c) takes a cypher string and the key schedule
+(c) takes a cipher string and the key schedule
 
-Local ps,i,sl,mb,tb
+Local ps,i,sl,mb,tb,iv,ivs
 
 dim(cs)+32->sl
 (c) empty plaintext string
 ""->ps
 
 (c) get CBC initialization vector
-mid(cs,1,32)->vs
-get_iv(vs)->iv
+mid(cs,1,32)->ivs
+get_iv(ivs)->iv
 
 For i,33,sl,32
     (c) encrypted chars are represented by 2 hex digits
