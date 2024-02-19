@@ -5,20 +5,20 @@ Prgm
  
 Local cs,i,sl,pb,cb,mb
  
-dim(ps)->sl
+dim(ps)+16->sl
 (c) empty cypher string
 ""->cs
 
 (c) get CBC initialization vector
-subMat(w,rowDim(w)-3,1)->iv
+set_iv()->iv
 
 For i,1,sl,16
-	(c) load 16 bytes of ps into state
-	char_ord(mid(ps,i,16))->st
-	iv xor st->st
-	encr(w)
-	cs&ord_str(st)->cs
-	st->iv
+    (c) load 16 bytes of ps into state
+    char_ord(mid(ps,i,16))->st
+    iv xor st->st
+    encr(w)
+    cs&ord_str(st)->cs
+    st->iv
 EndFor
 
 cs->out
