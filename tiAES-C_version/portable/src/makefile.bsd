@@ -2,14 +2,6 @@ CC      = cc
 CFLAGS  = -w -Wall -Wextra
 LDFLAGS = -Wl,--allow-multiple-definition -lssl -lcrypto 
 RM      = rm -f
-UNAME  := $(shell uname)
-
-ifeq ($(UNAME),FreeBSD)
-	CFLAGS += -D BSD
-else ifeq ($(UNAME),Linux)
-	CFLAGS += -D LINUX
-	LDFLAGS += -l:libbsd0.a
-endif
 
 default: tiaes
 

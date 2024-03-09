@@ -5,24 +5,30 @@
 # Thanks to jfx2006 for contributions and advice.
 
 """
-  This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
+ This implementation tries to by fully compliant with the FIPS 197 Advanced Encryption
 Standard:
 https://csrc.nist.gov/files/pubs/fips/197/final/docs/fips-197.pdf
-  While it works, we cannot make any claims as to how secure the coding is nor is it very
+While it works, we cannot make any claims as to how secure the coding is nor is it very
 fast on large files. Do not use this code for anything other that personal education and
 enjoyment.
 """
 
 import os
 import gc
-import sys
 import hashlib
 import argparse
-import traceback
-import numpy as np
 from secrets import token_hex
 from getpass import getpass
-from aes_tables import *
+import numpy as np
+from aes_tables import (NB,
+                        sbox,
+                        sboxinv,
+                        m2,
+                        m3,
+                        m9,
+                        m11,
+                        m13,
+                        m14)
 
 
 ## Functions
@@ -43,7 +49,7 @@ def KeyExpansion(key: np.ndarray) -> np.ndarray:
     nk = len(key)//4
     nr = nk + 6
     wl = NB * (nr + 1)
-    
+
     # Round key constants as row vectors
     rcons = np.array([
         0x01, 0x00, 0x00, 0x00,
@@ -59,24 +65,24 @@ def KeyExpansion(key: np.ndarray) -> np.ndarray:
         0x6c, 0x00, 0x00, 0x00,
         0xd8, 0x00, 0x00, 0x00
     ], dtype=np.uint8).reshape(-1, 4)
-    
+
     w = np.zeros((wl, 4), dtype=np.uint8)
-    
+
     # Copy the original key into the first nk words of w
     w[:nk] = key.reshape(-1, 4)
-    
+
     # Expand key schedule
     for i in range(nk, wl):
         temp = w[i-1]
-        
+
         if i % nk == 0:
             temp = np.roll(temp, -1)
             temp = np.array([sbox[val] for val in temp], dtype=np.uint8)
             temp ^= rcons[i//nk - 1]
-        
+
         elif nk > 6 and i % nk == 4:
             temp = np.array([sbox[val] for val in temp], dtype=np.uint8)
-        
+
         w[i] = w[i-nk] ^ temp
 
     del key, temp
@@ -98,7 +104,7 @@ def AddRoundKey(st: np.ndarray, w: np.ndarray, rnd: int) -> np.ndarray:
     for c in range(4):
         wd = w[((rnd * 4) + c), :]
         st[:, c] ^= wd
-    
+
     return st
 # End AddRoundKey
 
@@ -283,7 +289,7 @@ def InvCipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
     s = AddRoundKey(st, w, nr)
     s = InvShiftRows(s)
     s = InvSubBytes(s)
-    
+
     # Rounds nr-1 -> 1
     for r in range(nr-1, 0, -1):
         s = AddRoundKey(s, w, r)
@@ -300,7 +306,10 @@ def InvCipher(st: np.ndarray, w: np.ndarray) -> np.ndarray:
 
 # Generate random IV
 def gen_iv() -> np.ndarray:
-    rn = token_hex(64) 
+    """
+    Generates random IV
+    """
+    rn = token_hex(64)
     hsh = hashlib.sha256(str.encode(rn)).digest()
     iv = np.zeros(16, dtype=np.uint8)
     # We only need 16 bytes from the hash. We could use
@@ -315,6 +324,22 @@ def gen_iv() -> np.ndarray:
     return iv
 # End gen_iv
 
+def get_pad(sz: int) -> int:
+    """
+    Calculates padding size.
+    """
+
+    # Padding so num of bytes is a multiple of 16
+    # as per the PKCS padding scheme.
+    pd = 0x10 - (sz % 0x10)
+
+    # If the file size is already a multiple of 16,
+    # add one block of 0x10 bytes
+    if pd == 0:
+        pd = 0x10
+
+    return pd
+# End get_pad
 
 # Encrpyt in CBC mode
 def cbcencr(fname: str, key: np.ndarray):
@@ -323,25 +348,13 @@ def cbcencr(fname: str, key: np.ndarray):
     Saves output as fname.enc
     """
 
-    # create an outfile name
-    outfile = fname + '.enc'
-
-    # Open input file for reading
-    infile = open(fname, 'r')
+    # Get input file size & padding
     fsz = os.path.getsize(fname)
+    pad = get_pad(fsz)
 
-    # Padding so num of bytes is a multiple of 16
-    # as per the PKCS padding scheme.
-    pad = 0x10 - (fsz % 0x10)
-
-    # If the file size is already a multiple of 16,
-    # add one block of 0x10 bytes
-    if pad == 0:
-        pad = 0x10
-
-    # get a numpy byte array
-    barr = np.fromfile(fname, dtype=np.uint8)
-    infile.close()
+    # get a numpy byte array from input file
+    with open(fname, 'rb', encoding=None) as inf:
+        barr = np.fromfile(inf, dtype=np.uint8)
 
     # pad the byte array
     pv = np.uint8(pad)
@@ -352,50 +365,48 @@ def cbcencr(fname: str, key: np.ndarray):
     del pv, padding, barr
     gc.collect()
 
-    try:
-        with open(outfile, 'w+b') as of:
-            ## Do CBC mode encr ##
-            # We need to iterate through pbd 16 bytes
-            # at a time, load them into a 4x4 state block
-            # array (stb) encrypt, flatten (fst) then write
-            # to outfile each time.
-            # Note that we do (state xor IV) _before_ we encrypt.
-            # The new state becomes the IV for the next CBC round.
+    # create an outfile name
+    outfile = fname + '.enc'
 
-            # Get our random IV 
-            iv = gen_iv() 
+    with open(outfile, 'w+b') as of:
+        ## Do CBC mode encr ##
+        # We need to iterate through pbd 16 bytes
+        # at a time, load them into a 4x4 state block
+        # array (stb) encrypt, flatten (fst) then write
+        # to outfile each time.
+        # Note that we do (state xor IV) _before_ we encrypt.
+        # The new state becomes the IV for the next CBC round.
 
-            # Write the IV to the first 16 bytes of the outfile
-            of.write(bytearray(iv.flatten()))
+        # Get our random IV
+        iv = gen_iv()
 
-            # The mark 'i' tracks our position in the padded byte array
-            i = 0
-            while i < fsz:
-                # Get next 16 bytes from bpd
-                st = bpd[i:i+16]
-                # Reshape into block by column
-                stb = st.reshape(4, 4, order='F')
-                # xor state and IV
-                stb ^= iv 
-                # Call Cipher()
-                stb = Cipher(stb, key)
-                # Copy state to new IV 
-                iv = stb.copy()
-                # Flatten state by column
-                fst = stb.flatten(order='F')
-                # This writes the flattend blocks to file
-                if len(fst) != 16:
-                    raise Exception(f'fst is length {len(fst)}')
-                of.write(bytearray(fst))
-                # Set i 
-                i = of.tell() - 16
-            # End while
-        # End with, automatic of.close()
-    except Exception as e:
-        traceback.print_exc()
-    finally:
-        del bpd, st, stb, iv, fst
-        gc.collect()
+        # Write the IV to the first 16 bytes of the outfile
+        of.write(bytearray(iv.flatten()))
+
+        # The mark 'i' tracks our position in the padded byte array
+        i = 0
+        while i < fsz:
+            # Get next 16 bytes from bpd
+            st = bpd[i:i+16]
+            # Reshape into block by column
+            stb = st.reshape(4, 4, order='F')
+            # xor state and IV
+            stb ^= iv
+            # Call Cipher()
+            stb = Cipher(stb, key)
+            # Copy state to new IV
+            iv = stb.copy()
+            # Flatten state by column
+            fst = stb.flatten(order='F')
+            # This writes the flattend blocks to file
+            of.write(bytearray(fst))
+            # Set i
+            i = of.tell() - 16
+        # End while
+    # End with, automatic of.close()
+
+    del bpd, st, stb, iv, fst
+    gc.collect()
 # End cbcencr
 
 
@@ -405,76 +416,73 @@ def cbcdecr(fname: str, key: np.ndarray):
     Decrypts in CBC mode.
     Saves output as fname.dec
     """
+
     # Strip off .enc extension
     # create an outfile name
     outfile = os.path.splitext(fname)[0] + '.dec'
-    
-    # Open input file for reading
-    infile = open(fname, 'r')
 
     # infile size
     fsz = os.path.getsize(fname)
 
     # get a numpy byte array
-    barr = np.fromfile(fname, dtype=np.uint8)
-    infile.close()
-    
+    with open(fname, 'rb', encoding=None) as inf:
+        barr = np.fromfile(inf, dtype=np.uint8)
+
     # Split barr[] to get IV and byte array
-    splits = np.split(barr, [16, fsz+1]) 
+    splits = np.split(barr, [16, fsz+1])
     iv = splits[0].reshape(4, 4)
     barr = splits[1]
     # Adjust fsz
     fsz = fsz - 16
 
-    try:
-        with open(outfile, 'w+b') as of:
-            ## Do CBC mode decr ##
-            # We need to iterate through pbd 16 bytes
-            # at a time, load them into a 4x4 state block
-            # array (stb) decrypt, flatten (fst) then write
-            # to outfile each time.
-            # Note that we do (state xor IV) _after_ we decrypt.
-            # The new state becomes the IV for the next CBC round.
+    # Strip off .enc extension
+    # create an outfile name
+    outfile = os.path.splitext(fname)[0] + '.dec'
 
-            i = 0
-            while i < fsz:
-                # Get next 16 bytes from byte array
-                st = barr[i:i+16]
-                # Reshape into block by column
-                stb = st.reshape(4, 4, order='F')
-                # Copy state to a temp block
-                tb = stb.copy()
-                # Call Cipher()
-                stb = InvCipher(stb, key)
-                # xor state and IV
-                stb ^= iv 
-                # Copy tmp block (old state) to new IV 
-                iv = tb.copy()
-                # Flatten state by column
-                fst = stb.flatten(order='F')
-                # This writes the flattend blocks to file
-                if len(fst) != 16:
-                    raise Exception(f'fst is length {len(fst)}')
-                of.write(bytearray(fst))
-                # Set i
-                i = of.tell()
-            # Get last byte value = padding bytes
-            of.seek(-1, 2)
-            pv = int.from_bytes(of.read(1), "little")
-            # Seek to cut-off point
-            of.seek(-pv, 2)
-            # Remove padding
-            of.truncate()
-        # End with, automatic of.close()
-    except Exception as e:
-        traceback.print_exc()
-    finally:
-        del fsz, st, stb, tb, iv, fst
-        gc.collect()
+    with open(outfile, 'w+b') as of:
+        ## Do CBC mode decr ##
+        # We need to iterate through pbd 16 bytes
+        # at a time, load them into a 4x4 state block
+        # array (stb) decrypt, flatten (fst) then write
+        # to outfile each time.
+        # Note that we do (state xor IV) _after_ we decrypt.
+        # The new state becomes the IV for the next CBC round.
+
+        i = 0
+        while i < fsz:
+            # Get next 16 bytes from byte array
+            st = barr[i:i+16]
+            # Reshape into block by column
+            stb = st.reshape(4, 4, order='F')
+            # Copy state to a temp block
+            tb = stb.copy()
+            # Call Cipher()
+            stb = InvCipher(stb, key)
+            # xor state and IV
+            stb ^= iv
+            # Copy tmp block (old state) to new IV
+            iv = tb.copy()
+            # Flatten state by column
+            fst = stb.flatten(order='F')
+            # This writes the flattend blocks to file
+            of.write(bytearray(fst))
+            # Set i
+            i = of.tell()
+        # End while
+        # Get last byte value = padding bytes
+        of.seek(-1, 2)
+        pv = int.from_bytes(of.read(1), "little")
+        # Seek to cut-off point
+        of.seek(-pv, 2)
+        # Remove padding
+        of.truncate()
+    # End with, automatic of.close()
+    del fsz, st, stb, tb, iv, fst
+    gc.collect()
 # End cbcdecr
 
 
-def get_args() -> tuple[bool, str, str]:
+def get_args() -> tuple:
     """
     Handle args, return args tuple
     """
@@ -490,17 +498,16 @@ def get_args() -> tuple[bool, str, str]:
     if args.encrypt:
         print('Encrypt', args.filename)
         return (True, args.filename, '')
-    elif args.decrypt:
+
+    if args.decrypt:
         fsplit = os.path.splitext(args.filename)
         if fsplit[1] == '.enc':
             print('Decrypt', args.filename)
         else:
             print('The file does not have the .enc extension.')
             print("We don't know if it was actually encrypted with PyAES.")
-            sys.exit()
+            return (None, None, None)
         return  (False, args.filename, fsplit[0])
-    else:
-        sys.exit()
 # End get_args
 
 
@@ -528,6 +535,10 @@ def get_passkey() -> np.ndarray:
 
 
 def main():
+    """
+    Our main()
+    """
+
     # Get and set arguments
     do_encr,file,fsplt = get_args()
 
@@ -535,21 +546,16 @@ def main():
     pw = get_passkey()
     key = KeyExpansion(pw)
 
-    try:
-        if do_encr is True:
-            print('We will now encrypt', file, 'to '+file+'.enc')
-            cbcencr(file, key)
-        elif do_encr is False:
-            print('We will now decrypt', file, 'to '+fsplt+'.dec')
-            cbcdecr(file, key)
-    except Exception as e:
-        print(e)
-    finally:
-        del pw, key
-        gc.collect()
+    if do_encr is True:
+        print('We will now encrypt', file, 'to '+file+'.enc')
+        cbcencr(file, key)
+    elif do_encr is False:
+        print('We will now decrypt', file, 'to '+fsplt+'.dec')
+        cbcdecr(file, key)
+    del pw, key
+    gc.collect()
 # End main
 
 
 if __name__ == '__main__':
     main()
-

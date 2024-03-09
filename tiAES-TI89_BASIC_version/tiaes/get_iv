@@ -1,0 +1,10 @@
+get_iv(ivs)
+Func
+(c)str
+(c) Returns the IV from cypher string's
+(c) first 16 bytes (32 characters)
+(c) converted from hex strings to ints
+
+Return str_ord(ivs)
+
+EndFunc

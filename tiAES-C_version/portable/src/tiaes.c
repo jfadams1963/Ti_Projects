@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 
     } else {
         // Zero out key schedule
-        memset(w, 0, 64*4*sizeof(w[0][0]));
+        memset(w, 0, 60*4*sizeof(w[0][0]));
         printf("Incorrect args:\n Usage: tiaes [e,d] <infile> <outfile>\n");
     }
 

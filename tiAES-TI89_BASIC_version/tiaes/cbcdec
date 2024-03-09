@@ -1,29 +1,30 @@
 cbcdec(cs,w)
 Prgm
 (c) string, mat
-(c) takes a cypher string and the key schedule
+(c) takes a cipher string and the key schedule
 
-Local ps,i,sl,mb,tb
+Local ps,i,sl,mb,tb,iv,ivs
 
 dim(cs)->sl
 (c) empty plaintext string
 ""->ps
 
 (c) get CBC initialization vector
-subMat(w,rowDim(w)-3,1)->iv
+mid(cs,1,32)->ivs
+get_iv(ivs)->iv
 
-For i,1,sl,32
-	(c) encrypted bytes are represented by 2 hex digits
-	(c) so we grab 32 cyphertext characters at a time
-	(c) str_ord() coverts hex to dec
-	str_ord(mid(cs,i,32))->st
-	(c) copy state to a temp block
-	st->tb
-	decr(w)
-	st xor iv->st
-	ps&ord_char(st)->ps
-	(c) temp block becomes the next IV
-	tb->iv
+For i,33,sl,32
+    (c) encrypted chars are represented by 2 hex digits
+    (c) so we grab 32 cyphertext digits at a time
+    (c) str_ord() coverts hex to dec
+    str_ord(mid(cs,i,32))->st
+    (c) copy state to a temp block
+    st->tb
+    decr(w)
+    st xor iv->st
+    ps&ord_char(st)->ps
+    (c) temp block becomes the next IV
+    tb->iv
 EndFor
 
 ps->out
